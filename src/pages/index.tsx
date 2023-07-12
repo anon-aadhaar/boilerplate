@@ -1,16 +1,18 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import { FileInput, pdfUpload, cerUpload } from "country-identity-kit";
 import { useState } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [signedPdfData, setSignedPdfData] = useState(Buffer.from([]));
   const [signature, setSignature] = useState("");
+  const [msgBigInt, setMsgBigInt] = useState<bigint>();
+  const [sigBigInt, setSigBigInt] = useState<bigint>();
+  const [modulusBigInt, setModulusBigInt] = useState<bigint>();
 
   const handlePdfChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(await pdfUpload(e));
+    const { signature, signedData } = await pdfUpload(e);
+    setSignature(signature);
+    setSignedPdfData(signedData);
   };
 
   return (
@@ -27,22 +29,19 @@ export default function Home() {
 
         <FileInput onChange={handlePdfChange} />
 
-        {/* <FileInput
-          onChange={(e) => {
-            const { msgBigInt, sigBigInt, modulusBigInt } = cerUpload(
+        <FileInput
+          onChange={async (e) => {
+            const { msgBigInt, sigBigInt, modulusBigInt } = await cerUpload(
               e,
               signedPdfData,
               signature
             );
 
-            console.log(
-              "Data extracted: ",
-              msgBigInt,
-              sigBigInt,
-              modulusBigInt
-            );
+            setMsgBigInt(msgBigInt);
+            setSigBigInt(sigBigInt);
+            setModulusBigInt(modulusBigInt);
           }}
-        /> */}
+        />
       </main>
     </>
   );
