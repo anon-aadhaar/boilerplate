@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { FileInput } from "country-identity-kit";
+import { FileInput, pdfUpload } from "country-identity-kit";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function Home() {
         <h1>Welcome to Country Identity Example</h1>
         <p>Prove your anon addhaar ownership</p>
 
-        <FileInput onChange={() => console.log("changed")} />
+        <FileInput onChange={pdfUpload} />
       </main>
     </>
   );
