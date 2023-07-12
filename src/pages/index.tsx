@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { FileInput, pdfUpload } from "country-identity-kit";
+import { FileInput } from "country-identity-kit";
 
 const inter = Inter({ subsets: ["latin"] });
 
