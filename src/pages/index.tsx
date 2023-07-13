@@ -1,5 +1,10 @@
 import Head from "next/head";
-import { FileInput, pdfUpload, cerUpload } from "country-identity-kit";
+import {
+  FileInput,
+  pdfUpload,
+  cerUpload,
+  ProvingButton,
+} from "country-identity-kit";
 import { useState } from "react";
 
 export default function Home() {
@@ -42,6 +47,16 @@ export default function Home() {
             setModulusBigInt(modulusBigInt);
           }}
         />
+
+        {sigBigInt && modulusBigInt && msgBigInt ? (
+          <ProvingButton
+            sigBigInt={sigBigInt}
+            modulusBigInt={modulusBigInt}
+            msgBigInt={msgBigInt}
+          />
+        ) : (
+          <div>Not yet</div>
+        )}
       </main>
     </>
   );
