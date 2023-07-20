@@ -4,15 +4,36 @@ import {
   pdfUpload,
   cerUpload,
   ProvingButton,
+  useIdentityProof,
 } from "country-identity-kit";
 import { useState } from "react";
+import {
+  usePassportPopupMessages,
+  usePendingPCD,
+  usePCDMultiplexer,
+} from "@pcd/passport-interface";
+import axios from "axios";
+
+export const ZUPASS_URL = "http://localhost:3000/";
 
 export default function Home() {
+  const [passportPCDStr, passportPendingPCDStr] = usePassportPopupMessages();
+  const [pendingPCDStatus, pendingPCDError, serverPCDStr] = usePendingPCD(
+    passportPendingPCDStr,
+    ZUPASS_URL
+  );
+  const pcdStr = usePCDMultiplexer(passportPCDStr, serverPCDStr);
   const [signedPdfData, setSignedPdfData] = useState(Buffer.from([]));
   const [signature, setSignature] = useState("");
   const [msgBigInt, setMsgBigInt] = useState<bigint>();
   const [sigBigInt, setSigBigInt] = useState<bigint>();
   const [modulusBigInt, setModulusBigInt] = useState<bigint>();
+  const [valid, setValid] = useState<boolean>(false);
+  const onVerified = (valid: boolean) => {
+    setValid(valid);
+  };
+
+  const { proof } = useIdentityProof(pcdStr, onVerified);
 
   const handlePdfChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { signature, signedData } = await pdfUpload(e);
@@ -57,6 +78,19 @@ export default function Home() {
         ) : (
           <div>Not yet</div>
         )}
+
+        <div>
+          {proof != null && (
+            <>
+              <p>Got Anon Aadhaar Proof from Passport</p>
+              {/* <CollapsableCode code={JSON.stringify(proof, null, 2)} /> */}
+              {valid === undefined && <p>❓ Proof verifying</p>}
+              {valid === false && <p>❌ Proof is invalid</p>}
+              {valid === true && <p>✅ Proof is valid</p>}
+            </>
+          )}
+          {valid && <p>Welcome, anon</p>}
+        </div>
       </main>
     </>
   );
