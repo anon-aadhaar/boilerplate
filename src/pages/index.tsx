@@ -7,6 +7,7 @@ import {
 import { useEffect } from "react";
 
 export default function Home() {
+  // Use the Country Identity hook to get the status of the user.
   const [countryIdentity] = useCountryIdentity();
 
   useEffect(() => {
@@ -31,9 +32,11 @@ export default function Home() {
           </h1>
           <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
+          {/* Import the Connect Button component */}
           <LogInWithCountryIdentity />
         </main>
         <div className="flex flex-col items-center gap-4 rounded-2xl max-w-screen-sm mx-auto p-8">
+          {/* Render the proof if generated and valid */}
           {countryIdentity?.status === "logged-in" && (
             <>
               <p>✅ Proof is valid</p>
