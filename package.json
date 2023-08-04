@@ -9,12 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@pcd/passport-interface": "^0.6.0",
+    "@types/json-bigint": "^1.0.1",
     "@types/node": "20.4.1",
+    "@types/qr-image": "^3.2.6",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "axios": "^1.4.0",
-    "country-identity-kit": "^0.0.1",
+    "country-identity-kit": "^0.0.2",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "next": "13.4.9",
@@ -22,6 +23,10 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@types/pako": "^2.0.0",
+    "@types/styled-components": "^5.1.26",
+    "@types/uuid": "^9.0.2",
+    "@types/valid-url": "^1.0.4",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.25",
     "tailwindcss": "^3.3.2"
