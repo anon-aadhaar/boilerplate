@@ -11,16 +11,16 @@ export default function Home() {
   const [anonAadhaar] = useAnonAadhaar();
 
   useEffect(() => {
-    console.log("Country Identity status: ", anonAadhaar.status);
+    console.log("Anon Aadhaar status: ", anonAadhaar.status);
   }, [anonAadhaar]);
 
   return (
     <>
       <Head>
-        <title>Country Identity Example</title>
+        <title>Anon Aadhaar Example</title>
         <meta
           name="description"
-          content="A Next.js example app that integrate the Country Identity SDK."
+          content="A Next.js example app that integrate the Anon Aadhaar SDK."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -28,7 +28,7 @@ export default function Home() {
       <div className="min-h-screen bg-gray-100 px-4 py-8">
         <main className="flex flex-col items-center gap-8 bg-white rounded-2xl max-w-screen-sm mx-auto h-[16rem] p-8">
           <h1 className="font-bold text-2xl">
-            Welcome to Country Identity Example
+            Welcome to Anon Aadhaar Example
           </h1>
           <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
