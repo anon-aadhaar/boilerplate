@@ -1,18 +1,18 @@
 import Head from "next/head";
 import {
-  LogInWithCountryIdentity,
-  useCountryIdentity,
-  CollapsableCode,
-} from "country-identity-kit";
+  AnonAadhaarProof,
+  LogInWithAnonAadhaar,
+  useAnonAadhaar,
+} from "anon-aadhaar-react";
 import { useEffect } from "react";
 
 export default function Home() {
   // Use the Country Identity hook to get the status of the user.
-  const [countryIdentity] = useCountryIdentity();
+  const [anonAadhaar] = useAnonAadhaar();
 
   useEffect(() => {
-    console.log("Country Identity state: ", countryIdentity);
-  }, [countryIdentity]);
+    console.log("Country Identity status: ", anonAadhaar.status);
+  }, [anonAadhaar]);
 
   return (
     <>
@@ -33,17 +33,17 @@ export default function Home() {
           <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
           {/* Import the Connect Button component */}
-          <LogInWithCountryIdentity />
+          <LogInWithAnonAadhaar />
         </main>
         <div className="flex flex-col items-center gap-4 rounded-2xl max-w-screen-sm mx-auto p-8">
           {/* Render the proof if generated and valid */}
-          {countryIdentity?.status === "logged-in" && (
+          {anonAadhaar?.status === "logged-in" && (
             <>
               <p>✅ Proof is valid</p>
               <p>Got your Aadhaar Identity Proof</p>
               <>Welcome anon!</>
-              <CollapsableCode
-                code={JSON.stringify(countryIdentity.pcd, null, 2)}
+              <AnonAadhaarProof
+                code={JSON.stringify(anonAadhaar.pcd, null, 2)}
               />
             </>
           )}
