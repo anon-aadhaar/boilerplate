@@ -5,6 +5,7 @@ import {
   useAnonAadhaar,
 } from "anon-aadhaar-react";
 import { useEffect } from "react";
+import { Footer } from "../../components/Footer";
 
 export default function Home() {
   // Use the Country Identity hook to get the status of the user.
@@ -26,7 +27,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-h-screen bg-gray-100 px-4 py-8">
-        <main className="flex flex-col items-center gap-8 bg-white rounded-2xl max-w-screen-sm mx-auto h-[16rem] p-8">
+        <main className="flex flex-col items-center gap-8 bg-white rounded-2xl max-w-screen-sm mx-auto h-[20rem] p-8">
           <h1 className="font-bold text-2xl">
             Welcome to Anon Aadhaar Example
           </h1>
@@ -34,6 +35,7 @@ export default function Home() {
 
           {/* Import the Connect Button component */}
           <LogInWithAnonAadhaar />
+          <Footer />
         </main>
         <div className="flex flex-col items-center gap-4 rounded-2xl max-w-screen-sm mx-auto p-8">
           {/* Render the proof if generated and valid */}
