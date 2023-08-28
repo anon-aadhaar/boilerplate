@@ -1646,10 +1646,10 @@ anon-aadhaar-pcd@*:
     uuid "^9.0.0"
     valid-url "^1.0.9"
 
-anon-aadhaar-react@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.1.tgz#70cfba7db4ae1c9541590e6f01a6ef5a44b87482"
-  integrity sha512-jeJyXYB4n7mjNfrwmvw3ycS1Bj9eNJ7kTX8pVO/TyMeGReu1iR/mJYQR5ToRhFcBf/eouJ/e02aDshkpaOUeIQ==
+anon-aadhaar-react@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.2.tgz#695949dfc0cbd8160c947dcb8799eb3120f96fde"
+  integrity sha512-hIY5haqLQN4xC9pov82X0/38zhe2A1P5OUszbwgX1CjsSa/kQqjkbWtlI2OXFvFo57jL4oBrS/Fs6AruUeb2iw==
   dependencies:
     "@pcd/pcd-types" "^0.6.0"
     "@peculiar/x509" "^1.9.3"
