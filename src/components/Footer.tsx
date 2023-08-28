@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import imgGithub from "../public/github-mark.png";
-import imgPSE from "../public/pse.png";
+import imgGithub from "../../public/github-mark.png";
+import imgPSE from "../../public/pse.png";
 import Image from "next/image";
 
 export const Footer: FunctionComponent = () => {

@@ -5,7 +5,7 @@ import {
   useAnonAadhaar,
 } from "anon-aadhaar-react";
 import { useEffect } from "react";
-import { Footer } from "../../components/Footer";
+import { Footer } from "../components/Footer";
 
 export default function Home() {
   // Use the Country Identity hook to get the status of the user.
