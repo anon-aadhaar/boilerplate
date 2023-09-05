@@ -1,18 +1,26 @@
+/* eslint-disable react/no-unescaped-entities */
 import Head from "next/head";
-import {
-  AnonAadhaarProof,
-  LogInWithAnonAadhaar,
-  useAnonAadhaar,
-} from "anon-aadhaar-react";
-import { useEffect } from "react";
-import { Footer } from "../components/Footer";
+import { LogInWithAnonAadhaar, useAnonAadhaar } from "anon-aadhaar-react";
+import { AnonAadhaarPCD } from "anon-aadhaar-pcd";
+import { useEffect, useState } from "react";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { Stepper } from "@/components/Stepper";
+import { useRouter } from "next/router";
+
+const truncate = (str: string, max: number, len: number) => {
+  return str.length > max ? str.substring(0, len) + "..." : str;
+};
 
 export default function Home() {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
+  const [pcd, setPcd] = useState<AnonAadhaarPCD>();
+  const router = useRouter();
 
   useEffect(() => {
     console.log("Anon Aadhaar status: ", anonAadhaar.status);
+    if (anonAadhaar.status === "logged-in") setPcd(anonAadhaar.pcd);
   }, [anonAadhaar]);
 
   return (
@@ -26,30 +34,46 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen bg-gray-100 px-4 py-8">
-        <main className="flex flex-col items-center gap-8 bg-white rounded-2xl max-w-screen-sm mx-auto h-[24rem] md:h-[20rem] p-8">
+      <div className="flex flex-col h-screen bg-gray-100 justify-between">
+        <Header />
+        <main className="flex flex-col gap-8 mx-auto rounded-2xl max-w-screen-sm p-8 justify-start">
           <h1 className="font-bold text-2xl">
             Welcome to Anon Aadhaar Example
           </h1>
+          <p>
+            First, you'll need to login with your Aadhaar card, the login
+            process will generate a proof that you're Aadhaar card signed by the
+            Indian government and then verify this proof to login you.
+          </p>
           <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
           {/* Import the Connect Button component */}
-          <LogInWithAnonAadhaar />
-          <Footer />
-        </main>
-        <div className="flex flex-col items-center gap-4 rounded-2xl max-w-screen-sm mx-auto p-8">
-          {/* Render the proof if generated and valid */}
-          {anonAadhaar?.status === "logged-in" && (
-            <>
-              <p>✅ Proof is valid</p>
-              <p>Got your Aadhaar Identity Proof</p>
-              <>Welcome anon!</>
-              <AnonAadhaarProof
-                code={JSON.stringify(anonAadhaar.pcd, null, 2)}
-              />
-            </>
+          <div className="flex w-full place-content-center">
+            <LogInWithAnonAadhaar />
+          </div>
+
+          {pcd && anonAadhaar.status === "logged-in" && (
+            <div className="border-black rounded-lg border p-8 bg-white w-full">
+              <div className="flex flex-col gap-y-2">
+                <p className="">
+                  {"Modulus: " + truncate(pcd.proof.modulus.toString(), 40, 40)}
+                </p>
+                <p className="">
+                  {"Pi_a: " + truncate(pcd.proof.proof.pi_a.toString(), 40, 40)}
+                </p>
+                <p>
+                  {"Pi_b: " + truncate(pcd.proof.proof.pi_b.toString(), 40, 40)}
+                </p>
+                <p>
+                  {"Pi_c: " + truncate(pcd.proof.proof.pi_c.toString(), 40, 40)}
+                </p>
+              </div>
+            </div>
           )}
-        </div>
+
+          <Stepper step={1} />
+        </main>
+        <Footer text={"First, generate an Anon Aadhaar proof"} />
       </div>
     </>
   );
