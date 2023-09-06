@@ -71,7 +71,12 @@ export default function Home() {
             </div>
           )}
 
-          <Stepper step={1} />
+          <Stepper
+            step={1}
+            onNextClick={() => {
+              router.push("/vote");
+            }}
+          />
         </main>
         <Footer text={"First, generate an Anon Aadhaar proof"} />
       </div>

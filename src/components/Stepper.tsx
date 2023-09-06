@@ -8,7 +8,7 @@ export type StepperProps = {
 
 export function Stepper({ step, onPrevClick, onNextClick }: StepperProps) {
   return (
-    <div className="w-full justify-between pt-6">
+    <div className="flex w-full justify-between pt-6">
       {onPrevClick !== undefined ? (
         <button
           className="flex justify-start"
@@ -25,11 +25,11 @@ export function Stepper({ step, onPrevClick, onNextClick }: StepperProps) {
 
       {onNextClick !== undefined ? (
         <button
-          className="flex justify-end"
-          disabled={!onPrevClick}
-          onClick={onPrevClick || undefined}
+          className="flex items-center font-semibold"
+          disabled={!onNextClick}
+          onClick={onNextClick || undefined}
         >
-          Next <ChevronRightIcon />
+          Next <ChevronRightIcon height={15} />
         </button>
       ) : (
         <div className="flex" />
