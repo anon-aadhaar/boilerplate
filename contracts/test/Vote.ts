@@ -1,10 +1,10 @@
-import { loadFixture } from "@nomicfoundation/hardhat-toolbox/network-helpers";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ArgumentTypeName } from "@pcd/pcd-types";
 import { genData, exportCallDataGroth16 } from "./utils";
 import {
-  AnonAadhaarPCDArgs,
+  IdentityPCDArgs,
   init,
   prove,
   PCDInitArgs,
@@ -17,7 +17,7 @@ describe("Vote", function () {
   // and reset Hardhat Network to that snapshot in every test.
   async function deployOneYearLockFixture() {
     let Verifier = await ethers.getContractFactory("Verifier");
-    let verifier = await Verifier.deploy(["yes", "no", "maybe"]);
+    let verifier = await Verifier.deploy();
 
     await verifier.waitForDeployment();
     const _verifierAddress = verifier.getAddress();
@@ -32,7 +32,6 @@ describe("Vote", function () {
     const pcdInitArgs: PCDInitArgs = {
       wasmURL: "https://d3dxq5smiosdl4.cloudfront.net/main.wasm",
       zkeyURL: "https://d3dxq5smiosdl4.cloudfront.net/circuit_final.zkey",
-      vkeyURL: "https://d3dxq5smiosdl4.cloudfront.net/verification_key.json",
       isWebEnv: true,
     };
 
@@ -43,7 +42,7 @@ describe("Vote", function () {
       "SHA-1"
     );
 
-    const pcdArgs: AnonAadhaarPCDArgs = {
+    const pcdArgs: IdentityPCDArgs = {
       signature: {
         argumentType: ArgumentTypeName.BigInt,
         value: testData[1] + "",
@@ -60,9 +59,10 @@ describe("Vote", function () {
 
     const pcd = await prove(pcdArgs);
 
-    const { a, b, c, Input } = await exportCallDataGroth16(pcd.proof.proof, [
-      ...splitToWords(BigInt(pcd.proof.modulus), BigInt(64), BigInt(32)),
-    ]);
+    const { a, b, c, Input } = await exportCallDataGroth16(
+      pcd.proof.proof,
+      pcd.proof.modulus
+    );
 
     return { vote, a, b, c, Input };
   }

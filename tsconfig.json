@@ -18,7 +18,12 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "./contracts/hardhat.config.js"
+  ],
   "exclude": ["node_modules"],
-  "files": ["./hardhat.config.ts"]
+  "files": ["./contracts/hardhat.config.ts"]
 }

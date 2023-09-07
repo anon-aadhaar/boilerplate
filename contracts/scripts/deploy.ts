@@ -2,7 +2,14 @@ import "@nomiclabs/hardhat-ethers";
 import { ethers } from "hardhat";
 
 async function main() {
-  const vote = await ethers.deployContract("Vote");
+  const verifier = await ethers.deployContract("Verifier");
+  await verifier.waitForDeployment();
+
+  const vote = await ethers.deployContract("Vote", [
+    "Do you like this app?",
+    ["0", "1", "2", "3", "4", "5"],
+    verifier.getAddress(),
+  ]);
 
   await vote.waitForDeployment();
 

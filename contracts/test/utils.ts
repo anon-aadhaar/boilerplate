@@ -1,8 +1,9 @@
 import { subtle } from "crypto";
 import { BigNumberish } from "ethers";
-import { AnonAadhaarPCD } from "anon-aadhaar-pcd";
+import { IdentityPCD } from "anon-aadhaar-pcd";
 // @ts-ignore
-import { groth16 } from "snarkjs";
+const { groth16 } = require("snarkjs");
+import { splitToWords } from "anon-aadhaar-pcd";
 
 function buffToBigInt(buff: string): bigint {
   return BigInt("0x" + Buffer.from(buff, "base64url").toString("hex"));
@@ -53,15 +54,19 @@ export async function genData(
 }
 
 export async function exportCallDataGroth16(
-  proof: AnonAadhaarPCD["proof"]["proof"],
-  _publicSignals: BigNumberish[]
+  proof: IdentityPCD["proof"]["proof"],
+  _publicSignals: BigNumberish
 ): Promise<{
   a: [BigNumberish, BigNumberish];
   b: [[BigNumberish, BigNumberish], [BigNumberish, BigNumberish]];
   c: [BigNumberish, BigNumberish];
   Input: BigNumberish[];
 }> {
-  const calldata = await groth16.exportSolidityCallData(proof, _publicSignals);
+  const input = [
+    ...splitToWords(BigInt(_publicSignals), BigInt(64), BigInt(32)),
+  ];
+
+  const calldata = await groth16.exportSolidityCallData(proof, input);
 
   const argv = calldata
     .replace(/["[\]\s]/g, "")

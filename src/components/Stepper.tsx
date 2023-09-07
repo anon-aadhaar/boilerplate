@@ -11,17 +11,19 @@ export function Stepper({ step, onPrevClick, onNextClick }: StepperProps) {
     <div className="flex w-full justify-between pt-6">
       {onPrevClick !== undefined ? (
         <button
-          className="flex justify-start"
+          className="flex items-center font-semibold"
           disabled={!onPrevClick}
           onClick={onPrevClick || undefined}
         >
-          Prev <ChevronLeftIcon />
+          <ChevronLeftIcon height={15} /> Prev
         </button>
       ) : (
         <div className="flex" />
       )}
 
-      <p className="flex justify-center font-bold">{step.toString()}/3</p>
+      <p className="flex-1 text-center items-center font-bold">
+        {step.toString()}/3
+      </p>
 
       {onNextClick !== undefined ? (
         <button

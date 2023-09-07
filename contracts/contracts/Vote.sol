@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-// import "country-identity-contracts/contracts/Verifier.sol";
-import "./Verifier.sol";
 import "hardhat/console.sol";
 
 interface IVerifier {
@@ -27,7 +25,6 @@ contract Vote {
 
     // List of proposals
     Proposal[] public proposals;
-    Verifier verifier = new Verifier();
 
     // Mapping to track if an address has already voted
     mapping(address => bool) public hasVoted;
