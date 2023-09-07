@@ -3,13 +3,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ArgumentTypeName } from "@pcd/pcd-types";
 import { genData, exportCallDataGroth16 } from "./utils";
-import {
-  IdentityPCDArgs,
-  init,
-  prove,
-  PCDInitArgs,
-  splitToWords,
-} from "anon-aadhaar-pcd";
+import { IdentityPCDArgs, init, prove, PCDInitArgs } from "anon-aadhaar-pcd";
 
 describe("Vote", function () {
   // We define a fixture to reuse the same setup in every test.

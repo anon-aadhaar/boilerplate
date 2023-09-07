@@ -3,9 +3,7 @@ import Image from "next/image";
 import imgGithub from "../../public/github-mark.png";
 import imgPSE from "../../public/pse.png";
 
-type HeaderProps = {};
-
-export const Header: FunctionComponent<HeaderProps> = () => {
+export const Header: FunctionComponent = () => {
   return (
     <header className="">
       <div className="flex items-center justify-end m-5">

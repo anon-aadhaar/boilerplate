@@ -1,4 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { FunctionComponent } from "react";
 
 export type StepperProps = {
   step: number;
@@ -6,7 +7,11 @@ export type StepperProps = {
   onNextClick?: () => void;
 };
 
-export function Stepper({ step, onPrevClick, onNextClick }: StepperProps) {
+export const Stepper: FunctionComponent<StepperProps> = ({
+  step,
+  onPrevClick,
+  onNextClick,
+}) => {
   return (
     <div className="flex w-full justify-between pt-6">
       {onPrevClick !== undefined ? (
@@ -38,4 +43,4 @@ export function Stepper({ step, onPrevClick, onNextClick }: StepperProps) {
       )}
     </div>
   );
-}
+};

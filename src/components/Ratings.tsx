@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, FunctionComponent } from "react";
 
 type RatingProps = {
   setRating: Dispatch<SetStateAction<string | undefined>>;
 };
 
-export const Ratings = ({ setRating }: RatingProps) => {
+export const Ratings: FunctionComponent<RatingProps> = ({ setRating }) => {
   return (
     <div className="flex flex-wrap">
       <div className="flex items-center mr-4">

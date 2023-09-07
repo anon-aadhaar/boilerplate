@@ -1,25 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import Head from "next/head";
-import { useAnonAadhaar } from "anon-aadhaar-react";
-import { IdentityPCD } from "anon-aadhaar-pcd";
-import { useEffect, useState } from "react";
 import { Footer } from "@/components/Footer";
 import { Stepper } from "@/components/Stepper";
 import { useRouter } from "next/router";
 import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
-import { useAccount, useConnect } from "wagmi";
+import { useAccount } from "wagmi";
 
 export default function ConnectWallet() {
   // Use the Country Identity hook to get the status of the user.
-  const [anonAadhaar] = useAnonAadhaar();
-  const [pcd, setPcd] = useState<IdentityPCD>();
   const router = useRouter();
   const { isConnected } = useAccount();
-  const { data } = useConnect();
-
-  useEffect(() => {
-    if (anonAadhaar.status === "logged-in") setPcd(anonAadhaar.pcd);
-  }, [anonAadhaar, data]);
 
   return (
     <>

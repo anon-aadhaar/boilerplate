@@ -46,7 +46,6 @@ export default function Vote() {
         <h1 className="font-bold text-2xl">Welcome to Anon Aadhaar Example</h1>
         <p>Now you can vote with your Anon Aadhaar proof.</p>
 
-        {/* Import the Connect Button component */}
         <div className="flex w-full place-content-center gap-8">
           <Web3Button />
           {isConnected && <Web3NetworkSwitch />}
