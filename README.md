@@ -10,7 +10,7 @@ To run it locally you'll need to add some env variables.
 
 ```bash
 PRIVATE_KEY=<Your deployer wallet private key>
-NEXT_PUBLIC_CONTRACT_ADDRESS=<The address of the contract you've deployed>
+NEXT_PUBLIC_CONTRACT_ADDRESS=<The address of the contract you've deployed without the 0x>
 NEXT_PUBLIC_PROJECT_ID=<Your WalletConnect project ID>
 ```
 

@@ -32,8 +32,8 @@ export default function App({ Component, pageProps }: AppProps) {
     UserStatus.LOGGED_OUT
   );
   return (
-    // Add the Country Identity Provider at the root of your app
     <WagmiConfig config={wagmiConfig}>
+      {/* Add the Country Identity Provider at the root of your app */}
       <AnonAadhaarProvider>
         <Head>
           <title>Anon Aadhaar Example</title>

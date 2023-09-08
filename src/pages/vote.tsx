@@ -12,7 +12,7 @@ import { Stepper } from "@/components/Stepper";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useAccount, useContractWrite } from "wagmi";
-import voteABI from "../../contracts/artifacts/contracts/Vote.sol/Vote.json";
+import voteABI from "../../public/Vote.json";
 import dynamic from "next/dynamic";
 import { UserStatus } from "@/interface";
 
