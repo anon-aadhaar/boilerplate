@@ -82,13 +82,25 @@ export default function Vote({ setUserStatus }: VoteProps) {
           <Ratings setRating={setRating} />
           {isConnected ? (
             isSuccess ? (
-              <button
-                disabled={true}
-                type="button"
-                className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-              >
-                Vote sent ✅
-              </button>
+              <>
+                <button
+                  disabled={true}
+                  type="button"
+                  className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                >
+                  Vote sent ✅
+                </button>
+                <p className="font-bold">
+                  You can check your transaction{" "}
+                  <a
+                    href={`https://goerli.etherscan.io/tx/${data?.hash}`}
+                    target="_blank"
+                    className="text-blue-500"
+                  >
+                    here
+                  </a>
+                </p>
+              </>
             ) : isLoading ? (
               <Loader />
             ) : (
