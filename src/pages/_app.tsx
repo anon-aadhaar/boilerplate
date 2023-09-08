@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-import { createContext, useEffect, useState } from "react";
+import { useState } from "react";
 import type { AppProps } from "next/app";
 import { AnonAadhaarProvider } from "anon-aadhaar-react";
 import {

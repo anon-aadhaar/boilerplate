@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { LogInWithAnonAadhaar, useAnonAadhaar } from "anon-aadhaar-react";
 import { Dispatch, useEffect, useState, SetStateAction } from "react";
-import { IdentityPCD } from "anon-aadhaar-pcd";
+import { AnonAadhaarPCD } from "anon-aadhaar-pcd";
 import { Stepper } from "../components/Stepper";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
@@ -17,7 +17,7 @@ type HomeProps = {
 export default function Home({ setUserStatus }: HomeProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
-  const [pcd, setPcd] = useState<IdentityPCD>();
+  const [pcd, setPcd] = useState<AnonAadhaarPCD>();
   const router = useRouter();
 
   useEffect(() => {

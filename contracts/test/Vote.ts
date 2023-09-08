@@ -2,8 +2,17 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ArgumentTypeName } from "@pcd/pcd-types";
-import { genData, exportCallDataGroth16 } from "./utils";
-import { IdentityPCDArgs, init, prove, PCDInitArgs } from "anon-aadhaar-pcd";
+import {
+  AnonAadhaarPCDArgs,
+  init,
+  prove,
+  PCDInitArgs,
+  WASM_URL,
+  VK_URL,
+  ZKEY_URL,
+  genData,
+  exportCallDataGroth16,
+} from "anon-aadhaar-pcd";
 
 describe("Vote", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -23,20 +32,21 @@ describe("Vote", function () {
       _verifierAddress
     );
 
-    const pcdInitArgs: PCDInitArgs = {
-      wasmURL: "https://d3dxq5smiosdl4.cloudfront.net/main.wasm",
-      zkeyURL: "https://d3dxq5smiosdl4.cloudfront.net/circuit_final.zkey",
+    const initArgs: PCDInitArgs = {
+      wasmURL: WASM_URL,
+      zkeyURL: VK_URL,
+      vkeyURL: ZKEY_URL,
       isWebEnv: true,
     };
 
-    await init(pcdInitArgs);
+    await init(initArgs);
 
     const testData: [bigint, bigint, bigint, bigint] = await genData(
       "Hello world",
       "SHA-1"
     );
 
-    const pcdArgs: IdentityPCDArgs = {
+    const pcdArgs: AnonAadhaarPCDArgs = {
       signature: {
         argumentType: ArgumentTypeName.BigInt,
         value: testData[1] + "",

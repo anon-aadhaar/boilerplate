@@ -1,6 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar } from "anon-aadhaar-react";
-import { IdentityPCD, SnarkJSProof } from "anon-aadhaar-pcd";
+import {
+  AnonAadhaarPCD,
+  SnarkJSProof,
+  exportCallDataGroth16,
+  BigNumberish,
+} from "anon-aadhaar-pcd";
 import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
@@ -9,8 +14,6 @@ import { useRouter } from "next/router";
 import { useAccount, useContractWrite } from "wagmi";
 import voteABI from "../../contracts/artifacts/contracts/Vote.sol/Vote.json";
 import dynamic from "next/dynamic";
-import { exportCallDataGroth16 } from "../../contracts/test/utils";
-import { BigNumberish } from "ethers";
 import { UserStatus } from "@/interface";
 
 const WalletMultiButton = dynamic(
@@ -30,7 +33,7 @@ type VoteProps = {
 export default function Vote({ setUserStatus }: VoteProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
-  const [pcd, setPcd] = useState<IdentityPCD>();
+  const [pcd, setPcd] = useState<AnonAadhaarPCD>();
   const router = useRouter();
   const { isConnected } = useAccount();
   const [rating, setRating] = useState<string>();

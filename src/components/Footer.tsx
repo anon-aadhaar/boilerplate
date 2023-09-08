@@ -1,5 +1,5 @@
 import { UserStatus } from "@/interface";
-import { Context, FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
 type FooterProps = {
   text: UserStatus;
