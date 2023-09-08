@@ -1,7 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "hardhat-dependency-compiler";
-require("dotenv").config();
+require("dotenv").config({ path: "../.env.local" });
 
 const config: HardhatUserConfig = {
   solidity: "0.8.19",

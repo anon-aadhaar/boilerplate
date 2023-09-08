@@ -1,7 +1,8 @@
-import { FunctionComponent } from "react";
+import { UserStatus } from "@/interface";
+import { Context, FunctionComponent } from "react";
 
 type FooterProps = {
-  text: string;
+  text: UserStatus;
 };
 
 export const Footer: FunctionComponent<FooterProps> = ({ text }) => {
@@ -9,7 +10,7 @@ export const Footer: FunctionComponent<FooterProps> = ({ text }) => {
     <footer className="shadow bg-[#009a0863] border-t-2 border-black ">
       <div className="w-full mx-auto max-w-screen-xl p-4 flex items-center justify-center">
         <div className="text-lg text-black sm:text-center font-semi">
-          {text + "\u2003" + "👆"}
+          {text}
         </div>
       </div>
     </footer>

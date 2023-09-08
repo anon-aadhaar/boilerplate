@@ -6,6 +6,14 @@ You can check the documentation [here](https://anon-aadhaar-documentation.vercel
 
 You can fork/clone it.
 
+To run it locally you'll need to add some env variables.
+
+```bash
+PRIVATE_KEY=<Your deployer wallet private key>
+NEXT_PUBLIC_CONTRACT_ADDRESS=<The address of the contract you've deployed>
+NEXT_PUBLIC_PROJECT_ID=<Your WalletConnect project ID>
+```
+
 ### Install
 
 ```bash

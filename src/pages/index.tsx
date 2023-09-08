@@ -1,24 +1,33 @@
 /* eslint-disable react/no-unescaped-entities */
 import { LogInWithAnonAadhaar, useAnonAadhaar } from "anon-aadhaar-react";
-import { useEffect, useState } from "react";
+import { Dispatch, useEffect, useState, SetStateAction } from "react";
 import { IdentityPCD } from "anon-aadhaar-pcd";
-import { Footer } from "../components/Footer";
 import { Stepper } from "../components/Stepper";
 import { useRouter } from "next/router";
+import { UserStatus } from "@/interface";
 
 const truncate = (str: string, max: number, len: number) => {
   return str.length > max ? str.substring(0, len) + "..." : str;
 };
 
-export default function Home() {
+type HomeProps = {
+  setUserStatus: Dispatch<SetStateAction<UserStatus>>;
+};
+
+export default function Home({ setUserStatus }: HomeProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
   const [pcd, setPcd] = useState<IdentityPCD>();
   const router = useRouter();
 
   useEffect(() => {
-    if (anonAadhaar.status === "logged-in") setPcd(anonAadhaar.pcd);
-  }, [anonAadhaar]);
+    if (anonAadhaar.status === "logged-in") {
+      setPcd(anonAadhaar.pcd);
+      setUserStatus(UserStatus.LOGGED_IN);
+    } else {
+      setUserStatus(UserStatus.LOGGED_OUT);
+    }
+  }, [anonAadhaar, setUserStatus]);
 
   return (
     <>
@@ -26,8 +35,8 @@ export default function Home() {
         <h1 className="font-bold text-2xl">Welcome to Anon Aadhaar Example</h1>
         <p>
           First, you'll need to login with your Aadhaar card, the login process
-          will generate a proof that you're Aadhaar card signed by the Indian
-          government and then verify this proof to login you.
+          will generate a proof that you're Aadhaar card is signed by the Indian
+          government and then verifies this proof to log you in.
         </p>
         <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
@@ -57,7 +66,7 @@ export default function Home() {
             <Stepper
               step={1}
               onNextClick={() => {
-                router.push("/connect-wallet");
+                router.push("/vote");
               }}
             />
           </>
@@ -67,7 +76,6 @@ export default function Home() {
           </>
         )}
       </main>
-      <Footer text={"First, generate an Anon Aadhaar proof"} />
     </>
   );
 }

@@ -23,11 +23,11 @@ export const Stepper: FunctionComponent<StepperProps> = ({
           <ChevronLeftIcon height={15} /> Prev
         </button>
       ) : (
-        <div className="flex" />
+        <div className="flex w-12" />
       )}
 
-      <p className="flex-1 text-center items-center font-bold">
-        {step.toString()}/3
+      <p className="flex text-center items-center font-bold">
+        {step.toString()}/2
       </p>
 
       {onNextClick !== undefined ? (
@@ -39,7 +39,7 @@ export const Stepper: FunctionComponent<StepperProps> = ({
           Next <ChevronRightIcon height={15} />
         </button>
       ) : (
-        <div className="flex" />
+        <div className="flex w-12" />
       )}
     </div>
   );

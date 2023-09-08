@@ -1,18 +1,33 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar } from "anon-aadhaar-react";
 import { IdentityPCD, SnarkJSProof } from "anon-aadhaar-pcd";
-import { useEffect, useState } from "react";
+import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
-import { Footer } from "@/components/Footer";
 import { Stepper } from "@/components/Stepper";
+import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
-import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
 import { useAccount, useContractWrite } from "wagmi";
 import voteABI from "../../contracts/artifacts/contracts/Vote.sol/Vote.json";
+import dynamic from "next/dynamic";
 import { exportCallDataGroth16 } from "../../contracts/test/utils";
 import { BigNumberish } from "ethers";
+import { UserStatus } from "@/interface";
 
-export default function Vote() {
+const WalletMultiButton = dynamic(
+  async () => (await import("@web3modal/react")).Web3Button,
+  { ssr: false }
+);
+
+const WalletMultiSwitch = dynamic(
+  async () => (await import("@web3modal/react")).Web3NetworkSwitch,
+  { ssr: false }
+);
+
+type VoteProps = {
+  setUserStatus: Dispatch<SetStateAction<UserStatus>>;
+};
+
+export default function Vote({ setUserStatus }: VoteProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
   const [pcd, setPcd] = useState<IdentityPCD>();
@@ -20,7 +35,7 @@ export default function Vote() {
   const { isConnected } = useAccount();
   const [rating, setRating] = useState<string>();
   const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: "0xC756ab7d1CfDb277f5026b917d21c2Ce9f79D5b7",
+    address: `0x${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ""}`,
     abi: voteABI.abi,
     functionName: "voteForProposal",
   });
@@ -38,17 +53,26 @@ export default function Vote() {
 
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") setPcd(anonAadhaar.pcd);
-  }, [anonAadhaar, data]);
+  }, [anonAadhaar]);
+
+  useEffect(() => {
+    if (isConnected) setUserStatus(UserStatus.WALLET_CONNECTED);
+    else setUserStatus(UserStatus.WALLET_NOT_CONNECTED);
+  }, [isConnected, setUserStatus]);
 
   return (
     <>
-      <main className="flex flex-col min-h-[70vh] mx-auto rounded-2xl max-w-screen-sm p-8 justify-between">
+      <main className="flex flex-col min-h-[70vh] mx-auto rounded-2xl max-w-screen-sm w-full p-8 justify-between">
         <h1 className="font-bold text-2xl">Welcome to Anon Aadhaar Example</h1>
-        <p>Now you can vote with your Anon Aadhaar proof.</p>
+        <p>
+          Secondly, you can now connect your wallet and vote with your Anon
+          Aadhaar proof. Your vote will be spend along side your proof, and the
+          smart contract will first check your proof and then compute your vote.
+        </p>
 
         <div className="flex w-full place-content-center gap-8">
-          <Web3Button />
-          {isConnected && <Web3NetworkSwitch />}
+          <WalletMultiButton />
+          {isConnected && <WalletMultiSwitch />}
         </div>
 
         <div className="flex flex-col items-center gap-5">
@@ -56,28 +80,48 @@ export default function Vote() {
             On a scale of 0 to 5, how likely are you to recommend this hack?
           </p>
           <Ratings setRating={setRating} />
-
-          <button
-            disabled={rating === undefined || pcd === undefined}
-            type="button"
-            className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            onClick={() => {
-              if (rating !== undefined && pcd !== undefined)
-                sendVote(rating, pcd.proof.proof, pcd.proof.modulus);
-            }}
-          >
-            Vote
-          </button>
+          {isConnected ? (
+            isSuccess ? (
+              <button
+                disabled={true}
+                type="button"
+                className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+              >
+                Vote sent ✅
+              </button>
+            ) : isLoading ? (
+              <Loader />
+            ) : (
+              <button
+                disabled={rating === undefined || pcd === undefined}
+                type="button"
+                className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                onClick={() => {
+                  if (rating !== undefined && pcd !== undefined)
+                    sendVote(rating, pcd.proof.proof, pcd.proof.modulus);
+                }}
+              >
+                Vote
+              </button>
+            )
+          ) : (
+            <button
+              disabled={true}
+              type="button"
+              className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+            >
+              You need to connect your wallet first
+            </button>
+          )}{" "}
         </div>
 
         <Stepper
-          step={3}
+          step={2}
           onPrevClick={() => {
-            router.push("/connect-wallet");
+            router.push("/");
           }}
         />
       </main>
-      <Footer text={"First, generate an Anon Aadhaar proof"} />
     </>
   );
 }
