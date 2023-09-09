@@ -1,27 +1,18 @@
+import { UserStatus } from "@/interface";
 import { FunctionComponent } from "react";
-import imgGithub from "../../public/github-mark.png";
-import imgPSE from "../../public/pse.png";
-import Image from "next/image";
 
-export const Footer: FunctionComponent = () => {
+type FooterProps = {
+  text: UserStatus;
+};
+
+export const Footer: FunctionComponent<FooterProps> = ({ text }) => {
   return (
-    <>
-      <div className="flex items-center justify-center">
-        <div className="pr-5">
-          <a target={"_blank"} rel={"noreferrer"} href="https://pse.dev/">
-            <Image alt="pse" src={imgPSE} width={45} height={45}></Image>
-          </a>
-        </div>
-        <div className="pl-5">
-          <a
-            target={"_blank"}
-            rel={"noreferrer"}
-            href="https://github.com/privacy-scaling-explorations/anon-aadhaar"
-          >
-            <Image alt="github" src={imgGithub} width={45} height={45}></Image>
-          </a>
+    <footer className="shadow bg-[#009a0863] border-t-2 border-black ">
+      <div className="w-full mx-auto max-w-screen-xl p-4 flex items-center justify-center">
+        <div className="text-lg text-black sm:text-center font-semi">
+          {text}
         </div>
       </div>
-    </>
+    </footer>
   );
 };
