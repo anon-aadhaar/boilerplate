@@ -10,6 +10,7 @@ import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
 import { Loader } from "@/components/Loader";
+import { VoteResults } from "@/components/VoteResults";
 import { useRouter } from "next/router";
 import { useAccount, useContractWrite } from "wagmi";
 import voteABI from "../../public/Vote.json";
@@ -77,6 +78,8 @@ export default function Vote({ setUserStatus }: VoteProps) {
           <WalletMultiButton />
           {isConnected && <WalletMultiSwitch />}
         </div>
+
+        <VoteResults />
 
         <div className="flex flex-col items-center gap-5">
           <p className="font-medium">
