@@ -75,4 +75,9 @@ contract Vote {
         }
         return totalVotes;
     }    
+
+    // Function to check if a user has already voted
+    function checkVoted(address _addr) public view returns (bool) {
+        return hasVoted[_addr];
+    } 
 }
