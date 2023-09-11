@@ -5,7 +5,7 @@ import { AnonAadhaarPCD } from "anon-aadhaar-pcd";
 import { Stepper } from "../components/Stepper";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
-import { TestFiles } from "@/components/testFiles";
+import { TestFiles } from "@/components/TestFiles";
 
 const truncate = (str: string, max: number, len: number) => {
   return str.length > max ? str.substring(0, len) + "..." : str;
