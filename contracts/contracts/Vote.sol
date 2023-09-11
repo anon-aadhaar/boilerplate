@@ -66,4 +66,18 @@ contract Vote {
         Proposal memory proposal = proposals[proposalIndex];
         return (proposal.description, proposal.voteCount);
     }
+
+    // Function to get the total number of votes across all proposals
+    function getTotalVotes() public view returns (uint256) {
+        uint256 totalVotes = 0;
+        for (uint256 i = 0; i < proposals.length; i++) {
+            totalVotes += proposals[i].voteCount;
+        }
+        return totalVotes;
+    }    
+
+    // Function to check if a user has already voted
+    function checkVoted(address _addr) public view returns (bool) {
+        return hasVoted[_addr];
+    } 
 }

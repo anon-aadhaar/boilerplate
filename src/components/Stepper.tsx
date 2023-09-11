@@ -26,9 +26,9 @@ export const Stepper: FunctionComponent<StepperProps> = ({
         <div className="flex w-12" />
       )}
 
-      <p className="flex text-center items-center font-bold">
+      <div className="flex text-center items-center font-bold">
         {step.toString()}/2
-      </p>
+      </div>
 
       {onNextClick !== undefined ? (
         <button

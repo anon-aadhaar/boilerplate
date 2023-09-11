@@ -12,6 +12,7 @@ To run it locally you'll need to add some env variables.
 PRIVATE_KEY=<Your deployer wallet private key>
 NEXT_PUBLIC_CONTRACT_ADDRESS=<The address of the contract you've deployed without the 0x>
 NEXT_PUBLIC_PROJECT_ID=<Your WalletConnect project ID>
+NEXT_PUBLIC_GOERLI_PROVIDER_ID=<Your provider ID>
 ```
 
 ### Install

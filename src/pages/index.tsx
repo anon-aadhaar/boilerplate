@@ -5,6 +5,7 @@ import { AnonAadhaarPCD } from "anon-aadhaar-pcd";
 import { Stepper } from "../components/Stepper";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
+import { TestFiles } from "@/components/TestFiles";
 
 const truncate = (str: string, max: number, len: number) => {
   return str.length > max ? str.substring(0, len) + "..." : str;
@@ -31,14 +32,16 @@ export default function Home({ setUserStatus }: HomeProps) {
 
   return (
     <>
-      <main className="flex flex-col min-h-[70vh] mx-auto rounded-2xl max-w-screen-sm p-8 justify-between">
-        <h1 className="font-bold text-2xl">Welcome to Anon Aadhaar Example</h1>
+      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl max-w-screen-sm p-8 justify-between">
+        <h1 className="font-bold text-2xl">Anon Aadhaar Example - Login</h1>
         <p>
-          First, you'll need to login with your Aadhaar card, the login process
-          will generate a proof that you're Aadhaar card is signed by the Indian
-          government and then verifies this proof to log you in.
+          Initially, you'll need to log in using your Aadhaar card. During the
+          login process, a proof is generated to confirm the authenticity of
+          your Aadhaar card, which is signed by the Indian government. This
+          proof is then verified to grant you access.
+          <br></br>
+          Verify your identityanonymously using your Aadhaar card.
         </p>
-        <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
         {/* Import the Connect Button component */}
         <div className="flex w-full place-content-center">
@@ -72,6 +75,7 @@ export default function Home({ setUserStatus }: HomeProps) {
           </>
         ) : (
           <>
+            <TestFiles />
             <Stepper step={1} />
           </>
         )}
