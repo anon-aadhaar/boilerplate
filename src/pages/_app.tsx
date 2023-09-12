@@ -44,6 +44,17 @@ export default function App({ Component, pageProps }: AppProps) {
             <Head>
               <title>Anon Aadhaar Example</title>
               <meta
+                property="og:title"
+                content="Anon Aadhaar Example"
+                key="title"
+              />
+              <meta
+                property="og:image"
+                content="https://anon-aadhaar-example.vercel.app/public/AnonAadhaarBanner.png"
+                key="image"
+              />
+              <meta
+                property="og:description"
                 name="description"
                 content="A Next.js example app that integrate the Anon Aadhaar SDK."
               />
@@ -70,11 +81,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <div className="hidden sm:block">
               <div className="flex flex-col h-screen bg-gray-100 justify-between">
                 <Header />
-                <Component
-                  {...pageProps}
-                  setUserStatus={setUserStatus}
-                  userStatus={userStatus}
-                />
+                <Component {...pageProps} setUserStatus={setUserStatus} />
                 <Footer text={userStatus} />
               </div>
             </div>
