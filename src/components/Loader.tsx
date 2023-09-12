@@ -1,8 +1,6 @@
 import { FunctionComponent } from "react";
 
-type LoaderProps = {};
-
-export const Loader: FunctionComponent<LoaderProps> = () => {
+export const Loader: FunctionComponent = () => {
   return (
     <div role="status">
       <svg

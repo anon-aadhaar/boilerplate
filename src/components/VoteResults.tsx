@@ -2,9 +2,7 @@ import { FunctionComponent, useEffect, useState } from "react";
 import { getTotalVotes } from "@/utils";
 import { Loader } from "./Loader";
 
-export type VoteResultsProps = {};
-
-export const VoteResults: FunctionComponent<VoteResultsProps> = ({}) => {
+export const VoteResults: FunctionComponent = ({}) => {
   const [totalVote, setTotalVote] = useState(0);
   const [ready, setReady] = useState(false);
 
