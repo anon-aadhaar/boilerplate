@@ -99,4 +99,17 @@ describe("Test Vote.sol", function () {
       "Voted"
     );
   });
+
+  it("Should return the right number of votes.", async function () {
+    const { vote } = await loadFixture(deployOneYearLockFixture);
+
+    const { a, b, c, Input } = await exportCallDataGroth16(
+      pcd.proof.proof,
+      pcd.proof.modulus
+    );
+
+    await vote.voteForProposal(1, a, b, c, Input);
+
+    expect(await vote.getTotalVotes()).to.equal(1);
+  });
 });
