@@ -1843,6 +1843,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/snarkjs@^0.7.6":
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/@types/snarkjs/-/snarkjs-0.7.6.tgz#d15f755bb5de6fafc80fe65671f69e52be2c5afd"
+  integrity sha512-1GVira8XuoCqqOJTKT6UQVMrPRBtylA6OjRgRuwkZFUUy4R8ZrwchNn7yr+XjQ1aXPAv/Q/jua8e+HezKeZjyg==
+
 "@types/styled-components@^5.1.26":
   version "5.1.29"
   resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-5.1.29.tgz#a483d7829b972233455f1500930d6a7d30aa328e"
@@ -2564,24 +2569,7 @@ anon-aadhaar-contracts@^0.1.6:
   dependencies:
     dotenv "^16.3.1"
 
-anon-aadhaar-pcd@*:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.5.tgz#4c04de6d061ed362f437b1b6c9f45037a02d787f"
-  integrity sha512-NsQVPGYuZM5qBMByjyg5Go1gKgmH5CwFs5rHrjtVZVo0pqxLpE/CuWf162VGBmWSPstE84sxEaEhdxLYvCH0cQ==
-  dependencies:
-    "@pcd/pcd-types" "^0.6.0"
-    "@pcd/tsconfig" "^0.6.0"
-    axios "^1.4.0"
-    json-bigint "^1.0.0"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-    snarkjs "^0.7.0"
-    spdf "git+https://github.com/anon-aadhaar-private/sPDF.js.git#lite_pkg"
-    styled-components "^6.0.0-rc.1"
-    uuid "^9.0.0"
-    valid-url "^1.0.9"
-
-anon-aadhaar-pcd@^0.1.6:
+anon-aadhaar-pcd@*, anon-aadhaar-pcd@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.6.tgz#ac704ec1ccaa188a78d512735de73a758e9e790d"
   integrity sha512-uEFDz09+Mz86b1JwHtqm98lSsvTTu1n0+yHkF95/1ZgLi298YLWv7l4CoXrFMbK0jS8/vkOqKYFDvpNhz6JKow==
@@ -3170,9 +3158,9 @@ camelize@^1.0.0:
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001538, caniuse-lite@^1.0.30001541:
-  version "1.0.30001554"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001554.tgz#ba80d88dff9acbc0cd4b7535fc30e0191c5e2e2a"
-  integrity sha512-A2E3U//MBwbJVzebddm1YfNp7Nud5Ip+IPn4BozBmn4KqVX7AvluoIDFWjsv5OkGnKUXQVmMSoMKLa3ScCblcQ==
+  version "1.0.30001557"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001557.tgz#13f762ea1d7f7b009d4d2785fbbd250354d09ad9"
+  integrity sha512-91oR7hLNUP3gG6MLU+n96em322a8Xzes8wWdBKhLgUoiJsAF5irZnxSUCbc+qUZXNnPCfUwLOi9ZCZpkvjQajw==
 
 case@^1.6.3:
   version "1.6.3"
@@ -3713,9 +3701,9 @@ ejs@^3.1.6:
     jake "^10.8.5"
 
 electron-to-chromium@^1.4.535:
-  version "1.4.568"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.568.tgz#6ab444e120dd7fd9c3789eac54d3132b6cfcd0f9"
-  integrity sha512-3TCOv8+BY6Ltpt1/CmGBMups2IdKOyfEmz4J8yIS4xLSeMm0Rf+psSaxLuswG9qMKt+XbNbmADybtXGpTFlbDg==
+  version "1.4.569"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.569.tgz#1298b67727187ffbaac005a7425490d157f3ad03"
+  integrity sha512-LsrJjZ0IbVy12ApW3gpYpcmHS3iRxH4bkKOW98y1/D+3cvDUWGcbzbsFinfUS8knpcZk/PG/2p/RnkMCYN7PVg==
 
 elliptic@6.5.4, elliptic@^6.5.2, elliptic@^6.5.4:
   version "6.5.4"
@@ -4438,7 +4426,7 @@ ffjavascript@0.2.60:
     wasmcurves "0.2.2"
     web-worker "^1.2.0"
 
-ffjavascript@^0.2.48:
+ffjavascript@0.2.62, ffjavascript@^0.2.48:
   version "0.2.62"
   resolved "https://registry.yarnpkg.com/ffjavascript/-/ffjavascript-0.2.62.tgz#f508dfe662a70181598ec5eb8ce5127eb342f624"
   integrity sha512-uJ7MTrdzhX/3f+hxn0XhdXbJCqYZJSBB6y2/ui4t21vKYVjyTMlU80pPXu40ir6qpqbrdzUeKdlOdJ0aFG9UNA==
@@ -7125,9 +7113,9 @@ slice-ansi@^4.0.0:
     is-fullwidth-code-point "^3.0.0"
 
 snarkjs@^0.7.0:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.7.1.tgz#c96ecaf4db8c2eb44d60b17ee02f37ed39c821bb"
-  integrity sha512-Qs1oxssa135WZkzfARgEp5SuKHKvKNtcspeJbE5je6MurUpBylD1rzcAzQSTGWA/EH/BV/TmUyTaTD64xScvbA==
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.7.2.tgz#ab719b065fcd9867d9ea14bed92f3acdca3c766f"
+  integrity sha512-A8yPFm9pRnZ7XYXfPSjSFnugEV1rsHGjb8W7c0Qk7nzXl5h3WANTkpVC5FYxakmw/GKWekz7wjjHaOFtPp823Q==
   dependencies:
     "@iden3/binfileutils" "0.0.11"
     bfj "^7.0.2"
@@ -7135,7 +7123,7 @@ snarkjs@^0.7.0:
     circom_runtime "0.1.24"
     ejs "^3.1.6"
     fastfile "0.0.20"
-    ffjavascript "0.2.60"
+    ffjavascript "0.2.62"
     js-sha3 "^0.8.0"
     logplease "^1.2.15"
     r1csfile "0.0.47"
@@ -7983,9 +7971,9 @@ valtio@1.11.2:
     use-sync-external-store "1.2.0"
 
 viem@^1.0.0:
-  version "1.17.2"
-  resolved "https://registry.yarnpkg.com/viem/-/viem-1.17.2.tgz#1ce94816bcabc032594de104902d1048c51d45c6"
-  integrity sha512-lsF4qqo5cu9llE9g3736MIY2Qzeb/V/BebB4f0DaVuujQVebA/myHaplZGLjAqjPqCf9iui1VRZ6YCQsQ1FIBw==
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/viem/-/viem-1.18.0.tgz#26566664d70ab0402f163547c1a27f83daf77d06"
+  integrity sha512-NeKi5RFj7fHdsnk5pojivHFLkTyBWyehxeSE/gSPTDJKCWnR9i+Ra0W++VwN5ghciEG55O8b4RdpYhzGmhnr7A==
   dependencies:
     "@adraffy/ens-normalize" "1.9.4"
     "@noble/curves" "1.2.0"
