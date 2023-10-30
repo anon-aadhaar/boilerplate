@@ -2,10 +2,10 @@
 import { useAnonAadhaar } from "anon-aadhaar-react";
 import {
   AnonAadhaarPCD,
-  SnarkJSProof,
   exportCallDataGroth16,
   BigNumberish,
 } from "anon-aadhaar-pcd";
+import { Groth16Proof } from "snarkjs"
 import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
@@ -37,7 +37,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   const sendVote = async (
     rating: string,
-    _pcdProof: SnarkJSProof,
+    _pcdProof: Groth16Proof,
     _pcdMod: BigNumberish
   ) => {
     const { a, b, c, Input } = await exportCallDataGroth16(_pcdProof, _pcdMod);

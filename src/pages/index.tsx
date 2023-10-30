@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
-import { LogInWithAnonAadhaar, useAnonAadhaar } from "anon-aadhaar-react";
-import { Dispatch, useEffect, SetStateAction } from "react";
+import { LogInWithAnonAadhaar, LogInWithAnonAadhaarV2, useAnonAadhaar } from "anon-aadhaar-react";
+import { Dispatch, useEffect, useState, SetStateAction } from "react";
 import { Stepper } from "../components/Stepper";
+import {Toggle} from "../components/Toggles"
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
 import { TestFiles } from "@/components/TestFiles";
@@ -17,6 +18,7 @@ type HomeProps = {
 export default function Home({ setUserStatus }: HomeProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
+  const [withCert, setWithCert] = useState<boolean>(false)
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +42,7 @@ export default function Home({ setUserStatus }: HomeProps) {
 
         {/* Import the Connect Button component */}
         <div className="flex w-full place-content-center">
-          <LogInWithAnonAadhaar />
+          {withCert ? <LogInWithAnonAadhaar /> : <LogInWithAnonAadhaarV2 />}
         </div>
 
         {anonAadhaar.status === "logged-in" ? (
@@ -86,6 +88,9 @@ export default function Home({ setUserStatus }: HomeProps) {
           </>
         ) : (
           <>
+            <div className="flex self-center flex-col">
+            <Toggle withCert={withCert} setWithCert={setWithCert} /> 
+            </div>
             <TestFiles />
             <Stepper step={1} />
           </>
