@@ -57,27 +57,11 @@ export default function App({ Component, pageProps }: AppProps) {
       {ready ? (
         <WagmiConfig config={wagmiConfig}>
           <AnonAadhaarProvider>
-            <div className="sm:hidden">
-              {/* Display this on small screens (mobile) */}
-              <div className="text-center">
-                <main className="flex flex-col min-h-[70vh] mx-auto rounded-2xl max-w-screen-sm p-8 justify-between">
-                  <Header />
-                  <h1 className="font-bold">
-                    Sorry, Anon Aadhaar is not compatible with mobile devices
-                    yet.
-                  </h1>
-                  <p>See you on your Desktop :)</p>
-                  <div></div>
-                </main>
-              </div>
-            </div>
-            <div className="hidden sm:block">
               <div className="flex flex-col h-screen bg-gray-100 justify-between">
                 <Header />
                 <Component {...pageProps} setUserStatus={setUserStatus} />
                 <Footer text={userStatus} />
               </div>
-            </div>
           </AnonAadhaarProvider>
         </WagmiConfig>
       ) : null}

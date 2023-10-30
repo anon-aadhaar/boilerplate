@@ -64,7 +64,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   return (
     <>
-      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl max-w-screen-sm w-full p-8 justify-between">
+      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl max-w-screen-sm p-8 justify-between">
         <h1 className="font-bold text-2xl">Anon Aadhaar Example - Vote</h1>
         <div>
           Next, you have the option to connect your wallet and cast your vote
