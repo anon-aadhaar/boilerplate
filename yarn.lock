@@ -1201,7 +1201,7 @@
     pvtsutils "^1.3.5"
     tslib "^2.6.2"
 
-"@peculiar/x509@^1.9.3":
+"@peculiar/x509@^1.9.3", "@peculiar/x509@^1.9.5":
   version "1.9.5"
   resolved "https://registry.yarnpkg.com/@peculiar/x509/-/x509-1.9.5.tgz#1784e3629b197e6fc8ce34a8f74b786a901e800b"
   integrity sha512-6HBrlgoyH8sod0PTjQ8hzOL4/f5L94s5lwiL9Gr0P5HiSO8eeNgKoiB+s7VhDczE2aaloAgDXFjoQHVEcTg4mg==
@@ -1248,9 +1248,9 @@
     viem "^1.0.0"
 
 "@safe-global/safe-gateway-typescript-sdk@^3.5.3":
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/@safe-global/safe-gateway-typescript-sdk/-/safe-gateway-typescript-sdk-3.12.0.tgz#aa767a32f4d10f4ec9a47ad7e32d547d3b51e94c"
-  integrity sha512-hExCo62lScVC9/ztVqYEYL2pFxcqLTvB8fj0WtdP5FWrvbtEgD0pbVolchzD5bf85pbzvEwdAxSVS7EdCZxTNw==
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/@safe-global/safe-gateway-typescript-sdk/-/safe-gateway-typescript-sdk-3.13.0.tgz#0aa7e20e16376be0b181d7edacaf8cd8a0112247"
+  integrity sha512-VfSILoCLhBm6ll815+/SkmP3n9yTEWtT3neyU8951Xgk2C8poWpc9/wpY8iVnOUiQvOIRH+QvzfFlQONGwlcIg==
 
 "@scure/base@~1.1.0", "@scure/base@~1.1.2":
   version "1.1.3"
@@ -2562,20 +2562,23 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==
 
-anon-aadhaar-contracts@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-contracts/-/anon-aadhaar-contracts-0.1.6.tgz#6b7f6eec73a289bb55b56f91f3268fe7e95e4f2a"
-  integrity sha512-jeogvb0LLH8Nu7ed3kTzl3bOr7lv/78QZgptlfMbstyOvuX53Lc/+a49JRovXsWFYqdlc8I6FkRL3MFGUAKqqw==
+anon-aadhaar-contracts@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-contracts/-/anon-aadhaar-contracts-0.1.7.tgz#4101a4c641423941aea0750cd095017e7ba1757a"
+  integrity sha512-FONs7IZYsQD0RR+fK2JMo0N50SBEPuuSs4sPaS08z8s59/o8Ks0Ibk3Q61TogUMvOpCviMoqVJxM4KJZ+7CTPQ==
   dependencies:
     dotenv "^16.3.1"
 
-anon-aadhaar-pcd@*, anon-aadhaar-pcd@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.6.tgz#ac704ec1ccaa188a78d512735de73a758e9e790d"
-  integrity sha512-uEFDz09+Mz86b1JwHtqm98lSsvTTu1n0+yHkF95/1ZgLi298YLWv7l4CoXrFMbK0jS8/vkOqKYFDvpNhz6JKow==
+anon-aadhaar-pcd@*, anon-aadhaar-pcd@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.7.tgz#6fe8493db74ef2a185ec59865bb974a6f8c8b21a"
+  integrity sha512-wqAAfbDek0KnAxKQYcGdhqP599Yz3EmDvNK7ogDXQ/FvjbHJBaXbvhqyXrM8DJTsu98g4gczRgmJxGh28U5CNA==
   dependencies:
     "@pcd/pcd-types" "^0.6.0"
     "@pcd/tsconfig" "^0.6.0"
+    "@peculiar/x509" "^1.9.5"
+    "@types/node-forge" "^1.3.8"
+    "@types/snarkjs" "^0.7.6"
     axios "^1.4.0"
     json-bigint "^1.0.0"
     react "^18.2.0"
@@ -2586,10 +2589,10 @@ anon-aadhaar-pcd@*, anon-aadhaar-pcd@^0.1.6:
     uuid "^9.0.0"
     valid-url "^1.0.9"
 
-anon-aadhaar-react@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.6.tgz#2efa77c5af85eeddfa6a274343763768d6edfdca"
-  integrity sha512-f5RDbHrjtphL7h884OersXFc5GqrHglwYLEScK+CRKjzdnU3fhe1SNhuBQQJLunuFHzhVn/faOdt79ipHE2M6g==
+anon-aadhaar-react@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.7.tgz#7612fd5fe1d9afc070d3b1764cef91aa87f933ca"
+  integrity sha512-hNzgzRqaJNt9OJ3AYLyRb3HowHvQ7+30j7/hneYlS23Z2pyzdHooY545cQL55/2MBLNBrunu/cjY1Wx6g5aKsQ==
   dependencies:
     "@pcd/pcd-types" "^0.6.0"
     "@peculiar/x509" "^1.9.3"
@@ -3158,9 +3161,9 @@ camelize@^1.0.0:
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001538, caniuse-lite@^1.0.30001541:
-  version "1.0.30001557"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001557.tgz#13f762ea1d7f7b009d4d2785fbbd250354d09ad9"
-  integrity sha512-91oR7hLNUP3gG6MLU+n96em322a8Xzes8wWdBKhLgUoiJsAF5irZnxSUCbc+qUZXNnPCfUwLOi9ZCZpkvjQajw==
+  version "1.0.30001558"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001558.tgz#d2c6e21fdbfe83817f70feab902421a19b7983ee"
+  integrity sha512-/Et7DwLqpjS47JPEcz6VnxU9PwcIdVi0ciLXRWBQdj1XFye68pSQYpV0QtPTfUKWuOaEig+/Vez2l74eDc1tPQ==
 
 case@^1.6.3:
   version "1.6.3"
@@ -6866,9 +6869,9 @@ rlp@^2.2.3, rlp@^2.2.4:
     bn.js "^5.2.0"
 
 rpc-websockets@^7.5.1:
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/rpc-websockets/-/rpc-websockets-7.6.1.tgz#7d1dd00e5ad3e17bbe1d88ba6e66f4cb579cb66b"
-  integrity sha512-MmRGaJJvxTHSRxYPjJJqcj2zWnCetw7YbYbKlD0Yc7qVw6PsZhRJg1MI3mpWlpBs+4zO+urlNfLl9zLsdOD/gA==
+  version "7.6.2"
+  resolved "https://registry.yarnpkg.com/rpc-websockets/-/rpc-websockets-7.6.2.tgz#ed82f21ea8290f26d73f10d0dc0f9425dc364b81"
+  integrity sha512-+M1fOYMPxvOQDHbSItkD/an4fRwPZ1Nft1zv48G84S0TyChG2A1GXmjWkbs3o2NxW+q36H9nM2uLo5yojTrPaA==
   dependencies:
     "@babel/runtime" "^7.17.2"
     eventemitter3 "^4.0.7"
