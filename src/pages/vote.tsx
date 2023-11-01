@@ -5,7 +5,7 @@ import {
   exportCallDataGroth16,
   BigNumberish,
 } from "anon-aadhaar-pcd";
-import { Groth16Proof } from "snarkjs"
+import { Groth16Proof } from "snarkjs";
 import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
@@ -64,9 +64,11 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   return (
     <>
-      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl max-w-screen-sm p-8 justify-between">
-        <h1 className="font-bold text-2xl">Anon Aadhaar Example - Vote</h1>
-        <div>
+      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl max-w-xs sm:max-w-screen-sm p-2 sm:p-8 justify-between">
+        <h1 className="font-bold text-sm sm:text-2xl">
+          Anon Aadhaar Example - Vote
+        </h1>
+        <div className="text-sm sm:text-lg">
           Next, you have the option to connect your wallet and cast your vote
           alongside your Anon Aadhaar proof. Your vote will be paired with your
           proof, and the smart contract will initially verify your proof before
@@ -86,7 +88,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
             </>
           ) : (
             <>
-              <div className="font-medium">
+              <div className="text-sm sm:text-lg font-medium">
                 On a scale of 0 to 5, how likely are you to recommend this hack?
               </div>
               <Ratings setRating={setRating} />
