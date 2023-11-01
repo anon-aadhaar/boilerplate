@@ -64,7 +64,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   return (
     <>
-      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl max-w-xs sm:max-w-screen-sm p-2 sm:p-8 justify-between">
+      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl w-full sm:max-w-screen-sm p-2 sm:p-8 justify-between">
         <h1 className="font-bold text-sm sm:text-2xl">
           Anon Aadhaar Example - Vote
         </h1>
