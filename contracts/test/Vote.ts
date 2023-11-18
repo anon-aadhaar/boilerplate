@@ -47,6 +47,10 @@ describe("Test Vote.sol", function () {
         argumentType: ArgumentTypeName.BigInt,
         value: testData[3] + "",
       },
+      app_id: {
+        argumentType: ArgumentTypeName.BigInt,
+        value: testData[3] + "",
+      },
     };
 
     pcd = await prove(pcdArgs);
