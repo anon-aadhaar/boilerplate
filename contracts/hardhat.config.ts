@@ -6,7 +6,11 @@ require("dotenv").config({ path: "../.env.local" });
 const config: HardhatUserConfig = {
   solidity: "0.8.19",
   dependencyCompiler: {
-    paths: ["anon-aadhaar-contracts/contracts/Verifier.sol"],
+    paths: [
+      "anon-aadhaar-contracts/contracts/Verifier.sol",
+      "anon-aadhaar-contracts/contracts/AnonAadhaarVerifier.sol",
+      "anon-aadhaar-contracts/interfaces/IAnonAadhaarVerifier.sol",
+    ],
   },
   networks: {
     goerli: {

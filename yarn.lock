@@ -1293,7 +1293,7 @@
     pvtsutils "^1.3.5"
     tslib "^2.6.2"
 
-"@peculiar/x509@^1.9.3", "@peculiar/x509@^1.9.5":
+"@peculiar/x509@^1.9.5":
   version "1.9.5"
   resolved "https://registry.yarnpkg.com/@peculiar/x509/-/x509-1.9.5.tgz#1784e3629b197e6fc8ce34a8f74b786a901e800b"
   integrity sha512-6HBrlgoyH8sod0PTjQ8hzOL4/f5L94s5lwiL9Gr0P5HiSO8eeNgKoiB+s7VhDczE2aaloAgDXFjoQHVEcTg4mg==
@@ -2671,15 +2671,7 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==
 
-anon-aadhaar-contracts@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-contracts/-/anon-aadhaar-contracts-0.1.8.tgz#2a1625c33cd843101b3ec91bc238f89deb1c68ce"
-  integrity sha512-atEkdMOR/AfY2v8J2TqFdl37vWVouGkOM5KW1yHgEKdivR6TinOthSOm4uv7wl/HhtqEclmrlv5NFv7SVAhf1Q==
-  dependencies:
-    "@types/snarkjs" "^0.7.6"
-    dotenv "^16.3.1"
-
-anon-aadhaar-pcd@*, anon-aadhaar-pcd@^0.1.8:
+anon-aadhaar-pcd@*:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.8.tgz#1a47ecc53dfb1a70464aa054868462347746c4f2"
   integrity sha512-qRgjF1eeCCHs/nriahJ/DcVYh3yoZooEYYgLXvE/7wYSf4IkI0dXC7sxzNxU2pkQJIeJ51VbLP27D9v2jcdE0Q==
@@ -2701,13 +2693,34 @@ anon-aadhaar-pcd@*, anon-aadhaar-pcd@^0.1.8:
     uuid "^9.0.0"
     valid-url "^1.0.9"
 
-anon-aadhaar-react@^0.1.8:
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.8.tgz#58bc7ba10caf17900acddf55f168959560fc421f"
-  integrity sha512-y+5LkYGzYk4EULzMMXjVsPbCUMvk9udr7jGjvhAdMhXAMol+3JmGLOKwT7vM3yEkXxmb4nbZV9OomFud8sSH6Q==
+anon-aadhaar-pcd@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.9.tgz#4bb3918509e4deb61f383f682156ae681a5e6718"
+  integrity sha512-C6aWGDnTXudxkCXVyVxP4chaC32Jc0HCFPsOSOF4TGO1oniDDHkcdfKETKf9nNRSx/c41F99dDYBGBq03WE9zw==
   dependencies:
     "@pcd/pcd-types" "^0.6.0"
-    "@peculiar/x509" "^1.9.3"
+    "@pcd/tsconfig" "^0.6.0"
+    "@peculiar/x509" "^1.9.5"
+    "@types/node-forge" "^1.3.8"
+    "@types/snarkjs" "^0.7.6"
+    "@zk-kit/incremental-merkle-tree" "^1.1.0"
+    axios "^1.4.0"
+    circomlibjs "^0.1.7"
+    json-bigint "^1.0.0"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    snarkjs "^0.7.2"
+    spdf "git+https://github.com/anon-aadhaar-private/sPDF.js.git#lite_pkg"
+    styled-components "^6.0.0-rc.1"
+    uuid "^9.0.0"
+    valid-url "^1.0.9"
+
+anon-aadhaar-react@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.9.tgz#da166ac4c9f864f0a338e2f8af5e81f8230a4781"
+  integrity sha512-XaF4EOEF3lkemzr3t7lFdPrCcnsSAotXpu50MxKnlU7XygxLYa99boUTvZx2/nokPhsZ7vV1Z8Q+F0aOS9Kp8A==
+  dependencies:
+    "@pcd/pcd-types" "^0.6.0"
     "@types/json-bigint" "^1.0.1"
     "@types/pako" "^2.0.0"
     "@types/qr-image" "^3.2.6"
@@ -7545,7 +7558,7 @@ slice-ansi@^4.0.0:
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
 
-snarkjs@^0.7.0:
+snarkjs@^0.7.0, snarkjs@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/snarkjs/-/snarkjs-0.7.2.tgz#ab719b065fcd9867d9ea14bed92f3acdca3c766f"
   integrity sha512-A8yPFm9pRnZ7XYXfPSjSFnugEV1rsHGjb8W7c0Qk7nzXl5h3WANTkpVC5FYxakmw/GKWekz7wjjHaOFtPp823Q==

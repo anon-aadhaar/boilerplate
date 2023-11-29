@@ -17,6 +17,7 @@ import { UserStatus } from "@/interface";
 
 const chains = [goerli];
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
+const appId = process.env.NEXT_PUBLIC_APP_ID || "";
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiConfig = createConfig({
@@ -56,12 +57,12 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       {ready ? (
         <WagmiConfig config={wagmiConfig}>
-          <AnonAadhaarProvider>
-              <div className="flex flex-col h-screen bg-gray-100 justify-between">
-                <Header />
-                <Component {...pageProps} setUserStatus={setUserStatus} />
-                <Footer text={userStatus} />
-              </div>
+          <AnonAadhaarProvider _appId={appId}>
+            <div className="flex flex-col h-screen bg-gray-100 justify-between">
+              <Header />
+              <Component {...pageProps} setUserStatus={setUserStatus} />
+              <Footer text={userStatus} />
+            </div>
           </AnonAadhaarProvider>
         </WagmiConfig>
       ) : null}

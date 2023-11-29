@@ -1,12 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import {
-  LogInWithAnonAadhaar,
-  LogInWithAnonAadhaarV2,
-  useAnonAadhaar,
-} from "anon-aadhaar-react";
+import { LogInWithAnonAadhaar, useAnonAadhaar } from "anon-aadhaar-react";
 import { Dispatch, useEffect, useState, SetStateAction } from "react";
 import { Stepper } from "../components/Stepper";
-import { Toggle } from "../components/Toggles";
 import { ProofContainer } from "@/components/ProofContainer";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
@@ -45,7 +40,7 @@ export default function Home({ setUserStatus }: HomeProps) {
 
         {/* Import the Connect Button component */}
         <div className="flex w-full place-content-center">
-          {withCert ? <LogInWithAnonAadhaar /> : <LogInWithAnonAadhaarV2 />}
+          <LogInWithAnonAadhaar />
         </div>
 
         {anonAadhaar.status === "logged-in" ? (
@@ -60,9 +55,6 @@ export default function Home({ setUserStatus }: HomeProps) {
           </>
         ) : (
           <>
-            <div className="flex self-center flex-col">
-              <Toggle withCert={withCert} setWithCert={setWithCert} />
-            </div>
             <TestFiles />
             <Stepper step={1} />
           </>

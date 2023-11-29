@@ -1,59 +1,67 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ArgumentTypeName } from "@pcd/pcd-types";
 import {
-  AnonAadhaarPCDArgs,
+  WASM_URL,
+  ZKEY_URL,
   init,
   prove,
-  PCDInitArgs,
-  WASM_URL,
+  extractWitness,
+  splitToWords,
   VK_URL,
-  ZKEY_URL,
-  genData,
-  exportCallDataGroth16,
-  AnonAadhaarPCD,
+  AnonAadhaarPCDArgs,
 } from "anon-aadhaar-pcd";
+import {
+  exportCallDataGroth16,
+  exportCallDataGroth16FromPCD,
+  fetchKey,
+} from "./utils";
+import fs from "fs";
+import { ArgumentTypeName } from "@pcd/pcd-types";
 
 describe("Test Vote.sol", function () {
   this.timeout(0);
 
-  let testData: [bigint, bigint, bigint, bigint];
-
-  let pcd: AnonAadhaarPCD;
+  let witnessInputs: {
+    signature: string[];
+    modulus: string[];
+    base_message: string[];
+    app_id: string;
+  };
+  let appIdBigInt: string;
+  let pcdInputs: any;
 
   this.beforeAll(async () => {
-    testData = await genData("Hello world", "SHA-1");
+    const testFile = __dirname + "/signed.pdf";
+    const pdfRaw = fs.readFileSync(testFile);
+    const pdfBuffer = Buffer.from(pdfRaw);
+    const extractedData = await extractWitness(pdfBuffer, "test123");
 
-    const pcdInitArgs: PCDInitArgs = {
-      wasmURL: WASM_URL,
-      zkeyURL: ZKEY_URL,
-      vkeyURL: VK_URL,
-      isWebEnv: true,
+    if (extractedData instanceof Error) throw new Error(extractedData.message);
+
+    appIdBigInt = "196700487049306364386084600156231018794323017728";
+
+    witnessInputs = {
+      signature: splitToWords(extractedData.sigBigInt, BigInt(64), BigInt(32)),
+      modulus: splitToWords(
+        extractedData.modulusBigInt,
+        BigInt(64),
+        BigInt(32)
+      ),
+      base_message: splitToWords(
+        extractedData.msgBigInt,
+        BigInt(64),
+        BigInt(32)
+      ),
+      app_id: appIdBigInt,
     };
 
-    await init(pcdInitArgs);
-
-    const pcdArgs: AnonAadhaarPCDArgs = {
-      signature: {
-        argumentType: ArgumentTypeName.BigInt,
-        value: testData[1] + "",
-      },
-      modulus: {
-        argumentType: ArgumentTypeName.BigInt,
-        value: testData[2] + "",
-      },
-      base_message: {
-        argumentType: ArgumentTypeName.BigInt,
-        value: testData[3] + "",
-      },
-      app_id: {
-        argumentType: ArgumentTypeName.BigInt,
-        value: testData[3] + "",
-      },
+    pcdInputs = {
+      signature: extractedData.sigBigInt,
+      modulus: extractedData.modulusBigInt,
+      base_message: extractedData.msgBigInt,
+      app_id: appIdBigInt,
     };
-
-    pcd = await prove(pcdArgs);
   });
 
   async function deployOneYearLockFixture() {
@@ -63,14 +71,25 @@ describe("Test Vote.sol", function () {
     await verifier.waitForDeployment();
     const _verifierAddress = verifier.getAddress();
 
+    const AnonAadhaarVerifier = await ethers.getContractFactory(
+      "AnonAadhaarVerifier"
+    );
+    const anonAadhaarVerifier = await AnonAadhaarVerifier.deploy(
+      _verifierAddress,
+      appIdBigInt
+    );
+
+    await anonAadhaarVerifier.waitForDeployment();
+    const _AnonAadhaarVerifierAddress = anonAadhaarVerifier.getAddress();
+
     let Vote = await ethers.getContractFactory("Vote");
     let vote = await Vote.deploy(
       "Do you like this app?",
       ["yes", "no", "maybe"],
-      _verifierAddress
+      _AnonAadhaarVerifierAddress
     );
 
-    return { vote };
+    return { vote, appIdBigInt };
   }
 
   it("Should receive and store the propositions to vote", async function () {
@@ -83,9 +102,12 @@ describe("Test Vote.sol", function () {
     const { vote } = await loadFixture(deployOneYearLockFixture);
 
     const { a, b, c, Input } = await exportCallDataGroth16(
-      pcd.proof.proof,
-      pcd.proof.modulus
+      witnessInputs,
+      await fetchKey(WASM_URL),
+      await fetchKey(ZKEY_URL)
     );
+
+    console.log(Input);
 
     expect(await vote.verify(a, b, c, Input)).to.equal(true);
   });
@@ -94,8 +116,9 @@ describe("Test Vote.sol", function () {
     const { vote } = await loadFixture(deployOneYearLockFixture);
 
     const { a, b, c, Input } = await exportCallDataGroth16(
-      pcd.proof.proof,
-      pcd.proof.modulus
+      witnessInputs,
+      await fetchKey(WASM_URL),
+      await fetchKey(ZKEY_URL)
     );
 
     await expect(vote.voteForProposal(1, a, b, c, Input)).to.emit(
@@ -108,12 +131,64 @@ describe("Test Vote.sol", function () {
     const { vote } = await loadFixture(deployOneYearLockFixture);
 
     const { a, b, c, Input } = await exportCallDataGroth16(
-      pcd.proof.proof,
-      pcd.proof.modulus
+      witnessInputs,
+      await fetchKey(WASM_URL),
+      await fetchKey(ZKEY_URL)
     );
 
     await vote.voteForProposal(1, a, b, c, Input);
 
     expect(await vote.getTotalVotes()).to.equal(1);
+  });
+
+  it("Should emit vote event for a vote with a valid proof", async function () {
+    const { vote } = await loadFixture(deployOneYearLockFixture);
+
+    const { a, b, c, Input } = await exportCallDataGroth16(
+      witnessInputs,
+      await fetchKey(WASM_URL),
+      await fetchKey(ZKEY_URL)
+    );
+
+    await expect(vote.voteForProposal(1, a, b, c, Input)).to.emit(
+      vote,
+      "Voted"
+    );
+  });
+
+  it.only("Should Verify a valid PCD.", async function () {
+    const { vote } = await loadFixture(deployOneYearLockFixture);
+
+    await init({
+      wasmURL: WASM_URL,
+      zkeyURL: ZKEY_URL,
+      vkeyURL: VK_URL,
+      isWebEnv: true,
+    });
+
+    const pcdArgs: AnonAadhaarPCDArgs = {
+      signature: {
+        argumentType: ArgumentTypeName.BigInt,
+        value: pcdInputs.signature,
+      },
+      modulus: {
+        argumentType: ArgumentTypeName.BigInt,
+        value: pcdInputs.modulus,
+      },
+      base_message: {
+        argumentType: ArgumentTypeName.BigInt,
+        value: pcdInputs.base_message,
+      },
+      app_id: {
+        argumentType: ArgumentTypeName.BigInt,
+        value: pcdInputs.app_id,
+      },
+    };
+
+    const pcd = await prove(pcdArgs);
+
+    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(pcd);
+
+    expect(await vote.verify(a, b, c, Input)).to.equal(true);
   });
 });
