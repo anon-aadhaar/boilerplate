@@ -1,11 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar } from "anon-aadhaar-react";
-import {
-  AnonAadhaarPCD,
-  exportCallDataGroth16,
-  BigNumberish,
-} from "anon-aadhaar-pcd";
-import { Groth16Proof } from "snarkjs";
+import { AnonAadhaarPCD, exportCallDataGroth16FromPCD } from "anon-aadhaar-pcd";
 import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
@@ -35,12 +30,8 @@ export default function Vote({ setUserStatus }: VoteProps) {
     functionName: "voteForProposal",
   });
 
-  const sendVote = async (
-    rating: string,
-    _pcdProof: Groth16Proof,
-    _pcdMod: BigNumberish
-  ) => {
-    const { a, b, c, Input } = await exportCallDataGroth16(_pcdProof, _pcdMod);
+  const sendVote = async (rating: string, _pcd: AnonAadhaarPCD) => {
+    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(_pcd);
     write({
       args: [rating, a, b, c, Input],
     });
@@ -122,7 +113,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
                     className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     onClick={() => {
                       if (rating !== undefined && pcd !== undefined)
-                        sendVote(rating, pcd.proof.proof, pcd.proof.modulus);
+                        sendVote(rating, pcd);
                     }}
                   >
                     Vote
