@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-import "hardhat/console.sol";
-
-interface IAnonAadhaarVerifier {
-    function verifyProof(
-        uint[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[34] calldata _pubSignals
-    ) external view returns (bool);
-}
+import "../interfaces/IAnonAadhaarVerifier.sol";
 
 contract Vote {
     // Structure to hold proposal information
@@ -25,6 +19,9 @@ contract Vote {
 
     // Mapping to track if an address has already voted
     mapping(address => bool) public hasVoted;
+    // This can be replaced by the nullifier
+    // Nullifier can be accessed by calling _pubSignals[0]
+    // mapping(uint256 => bool) public hasVoted;
 
     // Constructor to initialize proposals
     constructor(string memory _votingQuestion, string[] memory proposalDescriptions, address _verifierAddr) {

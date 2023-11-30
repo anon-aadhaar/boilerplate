@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar } from "anon-aadhaar-react";
-import { AnonAadhaarPCD, BigNumberish } from "anon-aadhaar-pcd";
-import { Groth16Proof } from "snarkjs";
+import { AnonAadhaarPCD, exportCallDataGroth16FromPCD } from "anon-aadhaar-pcd";
 import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
@@ -12,7 +11,6 @@ import voteABI from "../../public/Vote.json";
 import { UserStatus } from "@/interface";
 import { Web3NetworkSwitch, Web3Button } from "@web3modal/react";
 import { hasVoted } from "@/utils";
-import { exportCallDataGroth16FromPCD } from "../../contracts/test/utils";
 
 type VoteProps = {
   setUserStatus: Dispatch<SetStateAction<UserStatus>>;

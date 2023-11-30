@@ -7,15 +7,13 @@ import {
   init,
   prove,
   extractWitness,
-  splitToWords,
-  VK_URL,
-  AnonAadhaarPCDArgs,
-} from "anon-aadhaar-pcd";
-import {
   exportCallDataGroth16,
   exportCallDataGroth16FromPCD,
-  fetchKey,
-} from "./utils";
+  VK_URL,
+  AnonAadhaarPCDArgs,
+  splitToWords,
+} from "anon-aadhaar-pcd";
+import { fetchKey } from "./utils";
 import fs from "fs";
 import { ArgumentTypeName } from "@pcd/pcd-types";
 
@@ -107,8 +105,6 @@ describe("Test Vote.sol", function () {
       await fetchKey(ZKEY_URL)
     );
 
-    console.log(Input);
-
     expect(await vote.verify(a, b, c, Input)).to.equal(true);
   });
 
@@ -156,7 +152,7 @@ describe("Test Vote.sol", function () {
     );
   });
 
-  it.only("Should Verify a valid PCD.", async function () {
+  it("Should Verify a valid PCD.", async function () {
     const { vote } = await loadFixture(deployOneYearLockFixture);
 
     await init({

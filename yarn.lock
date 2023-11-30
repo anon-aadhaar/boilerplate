@@ -2671,6 +2671,15 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==
 
+anon-aadhaar-contracts@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-contracts/-/anon-aadhaar-contracts-0.1.10.tgz#a3221e19104c80c948bd434255eed1b3037e1b47"
+  integrity sha512-pKMmcHU5Nh33COWA9rIeBcL5YaVag8yy20jtAgvSBF5SIF3Hs2dU5Li7fW+HB3w6naVKwSSUB5txYmNYalUr0w==
+  dependencies:
+    "@types/snarkjs" "^0.7.6"
+    dotenv "^16.3.1"
+    snarkjs "^0.7.2"
+
 anon-aadhaar-pcd@*:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.8.tgz#1a47ecc53dfb1a70464aa054868462347746c4f2"
@@ -2693,10 +2702,10 @@ anon-aadhaar-pcd@*:
     uuid "^9.0.0"
     valid-url "^1.0.9"
 
-anon-aadhaar-pcd@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.9.tgz#4bb3918509e4deb61f383f682156ae681a5e6718"
-  integrity sha512-C6aWGDnTXudxkCXVyVxP4chaC32Jc0HCFPsOSOF4TGO1oniDDHkcdfKETKf9nNRSx/c41F99dDYBGBq03WE9zw==
+anon-aadhaar-pcd@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-pcd/-/anon-aadhaar-pcd-0.1.10.tgz#2bd5289b0c3f47b7ce1bf7b14950b1bdd9f65f7d"
+  integrity sha512-f6LwpmMTLY1pCuKmRMzfauR6dchjEIkKj26p3ZJ0Fz9+RndA01cGO1VuozegMPNbr4i7aqeyVPhZuo207pHgPA==
   dependencies:
     "@pcd/pcd-types" "^0.6.0"
     "@pcd/tsconfig" "^0.6.0"
@@ -2715,10 +2724,10 @@ anon-aadhaar-pcd@^0.1.9:
     uuid "^9.0.0"
     valid-url "^1.0.9"
 
-anon-aadhaar-react@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.9.tgz#da166ac4c9f864f0a338e2f8af5e81f8230a4781"
-  integrity sha512-XaF4EOEF3lkemzr3t7lFdPrCcnsSAotXpu50MxKnlU7XygxLYa99boUTvZx2/nokPhsZ7vV1Z8Q+F0aOS9Kp8A==
+anon-aadhaar-react@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/anon-aadhaar-react/-/anon-aadhaar-react-0.1.10.tgz#1c2bb02045bdf22133fd59db8560226329928023"
+  integrity sha512-PQw9QKQe3rr43EKGSMIRQdSyqi3aJwlwjDAAXGuX+pRwg/VnMBAoxk3D1pTSC25Qhfq5TgDcQ7oONfXBiqxSKg==
   dependencies:
     "@pcd/pcd-types" "^0.6.0"
     "@types/json-bigint" "^1.0.1"
