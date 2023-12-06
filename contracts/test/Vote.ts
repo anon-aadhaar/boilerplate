@@ -16,6 +16,8 @@ import {
 import { fetchKey } from "./utils";
 import fs from "fs";
 import { ArgumentTypeName } from "@pcd/pcd-types";
+import { ZKArtifact } from "snarkjs";
+import { describe } from "mocha";
 
 describe("Test Vote.sol", function () {
   this.timeout(0);
@@ -28,6 +30,8 @@ describe("Test Vote.sol", function () {
   };
   let appIdBigInt: string;
   let pcdInputs: any;
+  let wasm_key: ZKArtifact; 
+  let zkey: ZKArtifact;
 
   this.beforeAll(async () => {
     const testFile = __dirname + "/signed.pdf";
@@ -60,6 +64,8 @@ describe("Test Vote.sol", function () {
       base_message: extractedData.msgBigInt,
       app_id: appIdBigInt,
     };
+    wasm_key = await fetchKey(WASM_URL);
+    zkey = await fetchKey(ZKEY_URL);
   });
 
   async function deployOneYearLockFixture() {
@@ -96,61 +102,39 @@ describe("Test Vote.sol", function () {
     expect(await vote.getProposalCount()).to.equal(3);
   });
 
-  it("Should Verify a valid proof.", async function () {
-    const { vote } = await loadFixture(deployOneYearLockFixture);
+  describe("Verify with valid proof", () => {
+    let a:any, b: any, c: any, Input: any;
+    this.beforeAll(async () => {
+      let proof = await exportCallDataGroth16(witnessInputs, wasm_key, zkey);
+      a = proof.a; 
+      b = proof.b;
+      c = proof.c;
+      Input = proof.Input;
+    }) 
 
-    const { a, b, c, Input } = await exportCallDataGroth16(
-      witnessInputs,
-      await fetchKey(WASM_URL),
-      await fetchKey(ZKEY_URL)
-    );
+    it("Should Verify a valid proof.", async function () {
+      const { vote } = await loadFixture(deployOneYearLockFixture);
+      expect(await vote.verify(a, b, c, Input)).to.equal(true);
+    });
+   
+    it("Should return the right number of votes.", async function () {
+      const { vote } = await loadFixture(deployOneYearLockFixture);
 
-    expect(await vote.verify(a, b, c, Input)).to.equal(true);
-  });
+      await vote.voteForProposal(1, a, b, c, Input);
+  
+      expect(await vote.getTotalVotes()).to.equal(1);
+    });
+  
+    it("Should emit vote event for a vote with a valid proof", async function () {
+      const { vote } = await loadFixture(deployOneYearLockFixture);
 
-  it("Should emit an event on vote.", async function () {
-    const { vote } = await loadFixture(deployOneYearLockFixture);
-
-    const { a, b, c, Input } = await exportCallDataGroth16(
-      witnessInputs,
-      await fetchKey(WASM_URL),
-      await fetchKey(ZKEY_URL)
-    );
-
-    await expect(vote.voteForProposal(1, a, b, c, Input)).to.emit(
-      vote,
-      "Voted"
-    );
-  });
-
-  it("Should return the right number of votes.", async function () {
-    const { vote } = await loadFixture(deployOneYearLockFixture);
-
-    const { a, b, c, Input } = await exportCallDataGroth16(
-      witnessInputs,
-      await fetchKey(WASM_URL),
-      await fetchKey(ZKEY_URL)
-    );
-
-    await vote.voteForProposal(1, a, b, c, Input);
-
-    expect(await vote.getTotalVotes()).to.equal(1);
-  });
-
-  it("Should emit vote event for a vote with a valid proof", async function () {
-    const { vote } = await loadFixture(deployOneYearLockFixture);
-
-    const { a, b, c, Input } = await exportCallDataGroth16(
-      witnessInputs,
-      await fetchKey(WASM_URL),
-      await fetchKey(ZKEY_URL)
-    );
-
-    await expect(vote.voteForProposal(1, a, b, c, Input)).to.emit(
-      vote,
-      "Voted"
-    );
-  });
+      await expect(vote.voteForProposal(1, a, b, c, Input)).to.emit(
+        vote,
+        "Voted"
+      );
+    });
+  })
+  
 
   it("Should Verify a valid PCD.", async function () {
     const { vote } = await loadFixture(deployOneYearLockFixture);
