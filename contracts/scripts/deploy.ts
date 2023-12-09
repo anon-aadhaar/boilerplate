@@ -17,7 +17,7 @@ async function main() {
   );
   await anonAadhaarVerifier.waitForDeployment();
 
-  const _anonAadhaarVerifierAddress = verifier.getAddress();
+  const _anonAadhaarVerifierAddress = anonAadhaarVerifier.getAddress();
 
   const vote = await ethers.deployContract("Vote", [
     "Do you like this app?",
