@@ -18,7 +18,7 @@ contract Vote {
     Proposal[] public proposals;
 
     // Mapping to track if an address has already voted
-    mapping(address => bool) public hasVoted;
+    mapping(uint256 => bool) public hasVoted;
     // This can be replaced by the nullifier
     // Nullifier can be accessed by calling _pubSignals[0]
     // mapping(uint256 => bool) public hasVoted;
@@ -39,11 +39,11 @@ contract Vote {
     // Function to vote for a proposal
     function voteForProposal(uint256 proposalIndex, uint256[2] calldata _pA, uint[2][2] calldata _pB, uint[2] calldata _pC, uint[34] calldata _pubSignals) public {
         require(proposalIndex < proposals.length, "Invalid proposal index");
-        require(!hasVoted[msg.sender], "You have already voted");
+        require(!hasVoted[_pubSignals[0]], "You have already voted");
         require(verify(_pA, _pB, _pC, _pubSignals), "Your idendity proof is not valid");
 
         proposals[proposalIndex].voteCount++;
-        hasVoted[msg.sender] = true;
+        hasVoted[_pubSignals[0]] = true;
 
         emit Voted(msg.sender, proposalIndex);
     }
@@ -71,7 +71,7 @@ contract Vote {
     }    
 
     // Function to check if a user has already voted
-    function checkVoted(address _addr) public view returns (bool) {
-        return hasVoted[_addr];
+    function checkVoted(uint256 _nullifier) public view returns (bool) {
+        return hasVoted[_nullifier];
     } 
 }
