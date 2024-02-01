@@ -1,15 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useAnonAadhaar } from "anon-aadhaar-react";
-import { AnonAadhaarPCD, exportCallDataGroth16FromPCD } from "anon-aadhaar-pcd";
+import { useAnonAadhaar } from "@anon-aadhaar/react";
+import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
 import { useEffect, useState, SetStateAction, Dispatch } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useAccount, useContractWrite } from "wagmi";
-import voteABI from "../../public/Vote.json";
+import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
 import { UserStatus } from "@/interface";
-import { Web3NetworkSwitch, Web3Button } from "@web3modal/react";
 import { hasVoted } from "@/utils";
 
 type VoteProps = {
@@ -20,25 +19,38 @@ export default function Vote({ setUserStatus }: VoteProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
   const [voted, setVoted] = useState(false);
-  const [pcd, setPcd] = useState<AnonAadhaarPCD>();
+  const [anonAadhaarCore, setAnonAadhaarCore] = useState<AnonAadhaarCore>();
   const router = useRouter();
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: `0x${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ""}`,
-    abi: voteABI.abi,
+    abi: anonAadhaarVote.abi,
     functionName: "voteForProposal",
   });
 
-  const sendVote = async (rating: string, _pcd: AnonAadhaarPCD) => {
-    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(_pcd);
+  const sendVote = async (
+    _rating: string,
+    _anonAadhaarCore: AnonAadhaarCore
+  ) => {
+    const PackedGroth16Proof = packGroth16Proof(
+      _anonAadhaarCore.proof.groth16Proof
+    );
     write({
-      args: [rating, a, b, c, Input],
+      args: [
+        _rating,
+        _anonAadhaarCore.proof.identityNullifier,
+        _anonAadhaarCore.proof.userNullifier,
+        _anonAadhaarCore.proof.timestamp,
+        address,
+        PackedGroth16Proof,
+      ],
     });
   };
 
   useEffect(() => {
-    if (anonAadhaar.status === "logged-in") setPcd(anonAadhaar.pcd);
+    if (anonAadhaar.status === "logged-in")
+      setAnonAadhaarCore(anonAadhaar.anonAadhaarProof);
   }, [anonAadhaar]);
 
   useEffect(() => {
@@ -64,11 +76,6 @@ export default function Vote({ setUserStatus }: VoteProps) {
           alongside your Anon Aadhaar proof. Your vote will be paired with your
           proof, and the smart contract will initially verify your proof before
           processing your vote.
-        </div>
-
-        <div className="flex w-full place-content-center gap-8">
-          <Web3Button />
-          {isConnected && <Web3NetworkSwitch />}
         </div>
 
         <div className="flex flex-col items-center gap-5">
@@ -108,12 +115,14 @@ export default function Vote({ setUserStatus }: VoteProps) {
                   <Loader />
                 ) : (
                   <button
-                    disabled={rating === undefined || pcd === undefined}
+                    disabled={
+                      rating === undefined || anonAadhaarCore === undefined
+                    }
                     type="button"
                     className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     onClick={() => {
-                      if (rating !== undefined && pcd !== undefined)
-                        sendVote(rating, pcd);
+                      if (rating !== undefined && anonAadhaarCore !== undefined)
+                        sendVote(rating, anonAadhaarCore);
                     }}
                   >
                     Vote
@@ -125,7 +134,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
                   type="button"
                   className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                 >
-                  You need to connect your wallet first
+                  You need to connect your wallet first ⬆️
                 </button>
               )}
             </>

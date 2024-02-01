@@ -1,20 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
-import { LogInWithAnonAadhaar, useAnonAadhaar } from "anon-aadhaar-react";
-import { Dispatch, useEffect, useState, SetStateAction } from "react";
+import { LogInWithAnonAadhaar, useAnonAadhaar } from "@anon-aadhaar/react";
+import { Dispatch, useEffect, SetStateAction } from "react";
 import { Stepper } from "../components/Stepper";
-import { ProofContainer } from "@/components/ProofContainer";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
-import { TestFiles } from "@/components/TestFiles";
+import { useAccount } from "wagmi";
 
 type HomeProps = {
   setUserStatus: Dispatch<SetStateAction<UserStatus>>;
 };
 
 export default function Home({ setUserStatus }: HomeProps) {
-  // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
-  const [withCert, setWithCert] = useState<boolean>(false);
+  const { isConnected, address } = useAccount();
   const router = useRouter();
 
   useEffect(() => {
@@ -38,14 +36,22 @@ export default function Home({ setUserStatus }: HomeProps) {
           Verify your identity anonymously using your Aadhaar card.
         </div>
 
-        {/* Import the Connect Button component */}
-        <div className="flex w-full place-content-center">
-          <LogInWithAnonAadhaar />
+        <div className="flex w-full place-content-center gap-8">
+          {isConnected ? (
+            <LogInWithAnonAadhaar signal={address} />
+          ) : (
+            <button
+              disabled={true}
+              type="button"
+              className="rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+            >
+              You need to connect your wallet first ⬆️
+            </button>
+          )}
         </div>
 
         {anonAadhaar.status === "logged-in" ? (
           <>
-            <ProofContainer pcd={anonAadhaar.pcd} />
             <Stepper
               step={1}
               onNextClick={() => {
@@ -55,7 +61,6 @@ export default function Home({ setUserStatus }: HomeProps) {
           </>
         ) : (
           <>
-            <TestFiles />
             <Stepper step={1} />
           </>
         )}
