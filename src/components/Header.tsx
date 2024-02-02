@@ -21,13 +21,15 @@ export const Header: FunctionComponent = () => {
 
       <div className="flex flex-row gap-3 items-center justify-end m-5">
         <VoteResults />
-        {process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ? (
+        {process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS ? (
           <a
-            href={`https://sepolia.etherscan.io/address/0x${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
+            href={`https://sepolia.etherscan.io/address/0x${process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS}`}
             target={"_blank"}
             className="text-black font-light text-sm hover:underline "
           >
-            {shortenAddress("0x" + process.env.NEXT_PUBLIC_CONTRACT_ADDRESS)}
+            {shortenAddress(
+              "0x" + process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS
+            )}
           </a>
         ) : null}
         <div className="">

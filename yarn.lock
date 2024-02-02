@@ -17,12 +17,12 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@anon-aadhaar/contracts@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/contracts/-/contracts-0.0.10.tgz#7323faded555f8d2fbbcbea51c2520a3b077c0f4"
-  integrity sha512-HD+9x8qS3OHlplORwlraluqynQ+M7vngAGGFLG1x0woODOK+t/ioGY/WxqNY1pP3gp6UfBqId3y1dXaVwiO2ZQ==
+"@anon-aadhaar/contracts@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/contracts/-/contracts-1.0.0.tgz#c603fb4b4a83cd8113a2ce47f8c3be19a84ed0de"
+  integrity sha512-J3F6eIbXzcYe4K5aijK3ovoIGAy6ZvHuTRzhuIJAKBwVCbu06UciwpJNveyS224FhXIDrZA5MWVTq3yxchY4Jw==
 
-"@anon-aadhaar/core@*", "@anon-aadhaar/core@^0.0.10":
+"@anon-aadhaar/core@*":
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/@anon-aadhaar/core/-/core-0.0.10.tgz#3f5ee4d87ef7aabded1abfddb4170ac85674b501"
   integrity sha512-9qUhVcPPmh3A9mOmCW2lYKfkeX5ToqRznqxGpFPpmB4yU0YoXezfzujokqmM9TeWMZU/pJvjymRfU6jm80+/yA==
@@ -43,10 +43,31 @@
     valid-url "^1.0.9"
     web-worker "1.2.0"
 
-"@anon-aadhaar/react@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/react/-/react-0.0.10.tgz#93a6d719925b0835817463ce1d022fb7fed0b2bc"
-  integrity sha512-XeVZd1zJTZ8UxgsSoInCs4IcvSc7Q+Pk3VP/0Bl9JO7VgRXDpJQcb1a9AYVfnC06+D/EB0XSkwQMdHpgwCUZgg==
+"@anon-aadhaar/core@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/core/-/core-1.0.0.tgz#c7f6d2aa1038d242aa68a61fd98e6dad2550d231"
+  integrity sha512-H+Hxhltv6/pGsKZT9F89KS98D7d+Ttfyb7MnqsoZYkXWtEuzaXxYdWwFz4pFgfBj4aJJbVerM44WLpGQu6L2rA==
+  dependencies:
+    "@pcd/pcd-types" "^0.10.0"
+    "@pcd/tsconfig" "^0.6.0"
+    "@types/node-forge" "^1.3.8"
+    "@types/snarkjs" "^0.7.6"
+    "@zk-email/helpers" "^3.1.3"
+    buffer "^6.0.3"
+    json-bigint "^1.0.0"
+    pako "^2.1.0"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    snarkjs "^0.7.3"
+    styled-components "^6.0.0-rc.1"
+    uuid "^9.0.0"
+    valid-url "^1.0.9"
+    web-worker "1.2.0"
+
+"@anon-aadhaar/react@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/react/-/react-1.0.0.tgz#03791c4215ad2bb7977b790ca566b090e4d0a936"
+  integrity sha512-rH9Hubd2+RoCHqRmA/45wvFY397Vt/sl1cYt52x6yzCrwB+aARSs9LEqu+860qhXc5Nn1PSd6KiN7+joYdLGBw==
   dependencies:
     "@anon-aadhaar/core" "*"
     "@pcd/pcd-types" "^0.6.0"

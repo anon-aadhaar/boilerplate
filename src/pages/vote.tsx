@@ -24,7 +24,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
   const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: `0x${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ""}`,
+    address: `0x${process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS || ""}`,
     abi: anonAadhaarVote.abi,
     functionName: "voteForProposal",
   });

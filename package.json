@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@anon-aadhaar/contracts": "^0.0.10",
-    "@anon-aadhaar/core": "^0.0.10",
-    "@anon-aadhaar/react": "^0.0.10",
+    "@anon-aadhaar/contracts": "^1.0.0",
+    "@anon-aadhaar/core": "^1.0.0",
+    "@anon-aadhaar/react": "^1.0.0",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@types/node": "20.4.1",
