@@ -2,22 +2,20 @@ import "@/styles/globals.css";
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
-import { AnonAadhaarProvider } from "anon-aadhaar-react";
+import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import {
   w3mConnectors,
   w3mProvider,
   EthereumClient,
 } from "@web3modal/ethereum";
 import { Header } from "../components/Header";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { goerli } from "wagmi/chains";
+import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
 import { Web3Modal } from "@web3modal/react";
 import { Footer } from "@/components/Footer";
 import { UserStatus } from "@/interface";
 
-const chains = [goerli];
+const chains = [sepolia];
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
-const appId = process.env.NEXT_PUBLIC_APP_ID || "";
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiConfig = createConfig({
@@ -57,7 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       {ready ? (
         <WagmiConfig config={wagmiConfig}>
-          <AnonAadhaarProvider _appId={appId}>
+          <AnonAadhaarProvider>
             <div className="flex flex-col h-screen bg-gray-100 justify-between">
               <Header />
               <Component {...pageProps} setUserStatus={setUserStatus} />

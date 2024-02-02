@@ -1,28 +1,12 @@
 import "@nomiclabs/hardhat-ethers";
 import { ethers } from "hardhat";
+require("dotenv").config({ path: "../../.env.local" });
 
 async function main() {
-  const verifier = await ethers.deployContract("Verifier");
-  await verifier.waitForDeployment();
-
-  const _verifierAddress = verifier.getAddress();
-
-  const appId = BigInt(
-    "609246576999142755181287323616835836365844250624"
-  ).toString();
-
-  const anonAadhaarVerifier = await ethers.deployContract(
-    "AnonAadhaarVerifier",
-    [_verifierAddress, appId]
-  );
-  await anonAadhaarVerifier.waitForDeployment();
-
-  const _anonAadhaarVerifierAddress = anonAadhaarVerifier.getAddress();
-
-  const vote = await ethers.deployContract("Vote", [
+  const vote = await ethers.deployContract("AnonAadhaarVote", [
     "Do you like this app?",
     ["0", "1", "2", "3", "4", "5"],
-    _anonAadhaarVerifierAddress,
+    "0x" + process.env.NEXT_PUBLIC_ANON_AADHAAR__SEPOLIA_CONTRACT_ADDRESS,
   ]);
 
   await vote.waitForDeployment();
