@@ -103,7 +103,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
                     <div className="font-bold">
                       You can check your transaction{" "}
                       <a
-                        href={`https://goerli.etherscan.io/tx/${data?.hash}`}
+                        href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
                         target="_blank"
                         className="text-blue-500"
                       >
