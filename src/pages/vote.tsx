@@ -1,7 +1,17 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useAnonAadhaar } from "@anon-aadhaar/react";
-import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
-import { useEffect, useState, SetStateAction, Dispatch } from "react";
+import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
+import {
+  AnonAadhaarCore,
+  packGroth16Proof,
+  deserialize,
+} from "@anon-aadhaar/core";
+import {
+  useEffect,
+  useState,
+  SetStateAction,
+  Dispatch,
+  useContext,
+} from "react";
 import { Ratings } from "@/components/Ratings";
 import { Stepper } from "@/components/Stepper";
 import { Loader } from "@/components/Loader";
@@ -10,6 +20,7 @@ import { useAccount, useContractWrite } from "wagmi";
 import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
 import { UserStatus } from "@/interface";
 import { hasVoted } from "@/utils";
+import { AppContext } from "./_app";
 
 type VoteProps = {
   setUserStatus: Dispatch<SetStateAction<UserStatus>>;
@@ -18,13 +29,19 @@ type VoteProps = {
 export default function Vote({ setUserStatus }: VoteProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
+  const { useTestAadhaar } = useContext(AppContext);
+  const [, latestProof] = useProver();
   const [voted, setVoted] = useState(false);
   const [anonAadhaarCore, setAnonAadhaarCore] = useState<AnonAadhaarCore>();
   const router = useRouter();
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
   const { data, isLoading, isSuccess, write } = useContractWrite({
-    address: `0x${process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS || ""}`,
+    address: `0x${
+      useTestAadhaar
+        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
+        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD || ""
+    }`,
     abi: anonAadhaarVote.abi,
     functionName: "voteForProposal",
   });
@@ -33,31 +50,44 @@ export default function Vote({ setUserStatus }: VoteProps) {
     _rating: string,
     _anonAadhaarCore: AnonAadhaarCore
   ) => {
-    const PackedGroth16Proof = packGroth16Proof(
+    const packedGroth16Proof = packGroth16Proof(
       _anonAadhaarCore.proof.groth16Proof
     );
     write({
       args: [
         _rating,
-        _anonAadhaarCore.proof.identityNullifier,
-        _anonAadhaarCore.proof.userNullifier,
+        process.env.NEXT_PUBLIC_NULLIFIER_SEED!,
+        _anonAadhaarCore.proof.nullifier,
         _anonAadhaarCore.proof.timestamp,
         address,
-        PackedGroth16Proof,
+        [
+          _anonAadhaarCore.proof.ageAbove18,
+          _anonAadhaarCore.proof.gender,
+          _anonAadhaarCore.proof.pincode,
+          _anonAadhaarCore.proof.state,
+        ],
+        packedGroth16Proof,
       ],
     });
   };
 
   useEffect(() => {
-    if (anonAadhaar.status === "logged-in")
-      setAnonAadhaarCore(anonAadhaar.anonAadhaarProof);
-  }, [anonAadhaar]);
+    if (anonAadhaar.status === "logged-in") {
+      deserialize(latestProof as unknown as string).then(
+        (proof: AnonAadhaarCore) => {
+          setAnonAadhaarCore(proof);
+        }
+      );
+    }
+  }, [anonAadhaar, latestProof]);
 
   useEffect(() => {
     address
-      ? hasVoted(address.toString()).then((response) => setVoted(response))
+      ? hasVoted(address.toString(), useTestAadhaar).then((response) =>
+          setVoted(response)
+        )
       : null;
-  }, [address]);
+  }, [address, useTestAadhaar]);
 
   useEffect(() => {
     isConnected

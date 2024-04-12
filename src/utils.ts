@@ -3,10 +3,16 @@ import votingAbi from "../public/AnonAadhaarVote.json";
 
 const providerUrl = `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_SEPOLIA_PROVIDER_ID}`;
 
-export const getTotalVotes = async (): Promise<number> => {
+export const getTotalVotes = async (
+  useTestAadhaar: boolean
+): Promise<number> => {
   const provider = ethers.getDefaultProvider(providerUrl);
   const voteContract = new ethers.Contract(
-    "0x" + process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS,
+    `0x${
+      useTestAadhaar
+        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
+        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
+    }`,
     votingAbi.abi,
     provider
   );
@@ -25,10 +31,17 @@ export const getTotalVotes = async (): Promise<number> => {
   return totalVoteCount;
 };
 
-export const hasVoted = async (userAddress: string): Promise<boolean> => {
+export const hasVoted = async (
+  userAddress: string,
+  useTestAadhaar: boolean
+): Promise<boolean> => {
   const provider = ethers.getDefaultProvider(providerUrl);
   const voteContract = new ethers.Contract(
-    "0x" + process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS,
+    `0x${
+      useTestAadhaar
+        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
+        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
+    }`,
     votingAbi.abi,
     provider
   );

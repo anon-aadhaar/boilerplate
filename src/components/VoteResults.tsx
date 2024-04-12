@@ -1,13 +1,15 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { getTotalVotes } from "@/utils";
 import { Loader } from "./Loader";
+import { AppContext } from "@/pages/_app";
 
 export const VoteResults: FunctionComponent = ({}) => {
   const [totalVote, setTotalVote] = useState(0);
   const [ready, setReady] = useState(false);
+  const { useTestAadhaar } = useContext(AppContext);
 
   useEffect(() => {
-    getTotalVotes().then((total) => {
+    getTotalVotes(useTestAadhaar).then((total) => {
       setTotalVote(total);
       setReady(true);
     });

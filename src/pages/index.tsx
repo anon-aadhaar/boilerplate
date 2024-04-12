@@ -1,16 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import { LogInWithAnonAadhaar, useAnonAadhaar } from "@anon-aadhaar/react";
-import { Dispatch, useEffect, SetStateAction } from "react";
+import { Dispatch, useEffect, SetStateAction, useContext } from "react";
 import { Stepper } from "../components/Stepper";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
 import { useAccount } from "wagmi";
+import { AppContext } from "./_app";
 
 type HomeProps = {
   setUserStatus: Dispatch<SetStateAction<UserStatus>>;
+  setIsTestMode: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function Home({ setUserStatus }: HomeProps) {
+export default function Home({ setUserStatus, setIsTestMode }: HomeProps) {
   const [anonAadhaar] = useAnonAadhaar();
   const { isConnected, address } = useAccount();
   const router = useRouter();
@@ -20,6 +22,11 @@ export default function Home({ setUserStatus }: HomeProps) {
       ? setUserStatus(UserStatus.LOGGED_IN)
       : setUserStatus(UserStatus.LOGGED_OUT);
   }, [anonAadhaar, setUserStatus]);
+  const { useTestAadhaar } = useContext(AppContext);
+
+  const switchAadhaar = () => {
+    setIsTestMode(!useTestAadhaar);
+  };
 
   return (
     <>
@@ -38,7 +45,31 @@ export default function Home({ setUserStatus }: HomeProps) {
 
         <div className="flex w-full place-content-center gap-8">
           {isConnected ? (
-            <LogInWithAnonAadhaar signal={address} />
+            <div>
+              <div className="flex gap-8 place-content-center">
+                <LogInWithAnonAadhaar
+                  nullifierSeed={Number(
+                    process.env.NEXT_PUBLIC_NULLIFIER_SEED!
+                  )}
+                  signal={address}
+                />
+                <button
+                  onClick={switchAadhaar}
+                  type="button"
+                  className="rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                >
+                  Switch for {useTestAadhaar ? "real" : "test"}
+                </button>
+              </div>
+              <h3 className="flex font-light text-lg mt-5 text-center">
+                You're using the
+                <p className="font-bold">
+                  &ensp;
+                  {useTestAadhaar ? "test" : "real"} &ensp;
+                </p>
+                Aadhaar mode
+              </h3>
+            </div>
           ) : (
             <button
               disabled={true}

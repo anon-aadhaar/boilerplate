@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import type { AppProps } from "next/app";
 import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import {
@@ -23,6 +23,7 @@ const wagmiConfig = createConfig({
   connectors: w3mConnectors({ projectId, chains }),
   publicClient,
 });
+export const AppContext = createContext({ useTestAadhaar: false });
 
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
@@ -31,6 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
     UserStatus.LOGGED_OUT
   );
   const [ready, setReady] = useState(false);
+  const [isTestMode, setIsTestMode] = useState<boolean>(false);
 
   useEffect(() => {
     setReady(true);
@@ -54,15 +56,21 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {ready ? (
-        <WagmiConfig config={wagmiConfig}>
-          <AnonAadhaarProvider>
-            <div className="flex flex-col h-screen bg-gray-100 justify-between">
-              <Header />
-              <Component {...pageProps} setUserStatus={setUserStatus} />
-              <Footer text={userStatus} />
-            </div>
-          </AnonAadhaarProvider>
-        </WagmiConfig>
+        <AppContext.Provider value={{ useTestAadhaar: isTestMode }}>
+          <WagmiConfig config={wagmiConfig}>
+            <AnonAadhaarProvider _useTestAadhaar={isTestMode}>
+              <div className="flex flex-col h-screen bg-gray-100 justify-between">
+                <Header />
+                <Component
+                  {...pageProps}
+                  setUserStatus={setUserStatus}
+                  setIsTestMode={setIsTestMode}
+                />
+                <Footer text={userStatus} />
+              </div>
+            </AnonAadhaarProvider>
+          </WagmiConfig>
+        </AppContext.Provider>
       ) : null}
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </>
