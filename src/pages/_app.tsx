@@ -71,7 +71,7 @@ export default function App({ Component, pageProps }: AppProps) {
                   setUserStatus={setUserStatus}
                   setIsTestMode={setIsTestMode}
                 />
-                <Footer text={userStatus} />
+                <Footer />
               </div>
             </AnonAadhaarProvider>
           </WagmiConfig>

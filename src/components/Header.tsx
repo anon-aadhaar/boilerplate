@@ -6,10 +6,7 @@ import Image from "next/image";
 import { Web3Button, Web3NetworkSwitch, useWeb3Modal } from "@web3modal/react";
 import { useAccount } from "wagmi";
 import { icons } from "./illustrations";
-
-function shortenAddress(address: string) {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
-}
+import { shortenAddress } from "@/utils";
 
 export const Header: FunctionComponent = () => {
   const { isConnected, address } = useAccount();
