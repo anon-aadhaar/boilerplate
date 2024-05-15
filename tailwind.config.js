@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        rajdhani: ["Rajdhani", "sans-serif"], // Create a custom font family
+      },
+    },
   },
   plugins: [],
 };
