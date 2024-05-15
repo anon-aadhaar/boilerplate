@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, SetStateAction } from "react";
 import type { AppProps } from "next/app";
 import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import {
@@ -23,7 +23,10 @@ const wagmiConfig = createConfig({
   connectors: w3mConnectors({ projectId, chains }),
   publicClient,
 });
-export const AppContext = createContext({ useTestAadhaar: false });
+export const AppContext = createContext({
+  useTestAadhaar: false,
+  setIsTestMode: (isTest: boolean) => {},
+});
 
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
@@ -56,10 +59,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {ready ? (
-        <AppContext.Provider value={{ useTestAadhaar: isTestMode }}>
+        <AppContext.Provider
+          value={{ useTestAadhaar: isTestMode, setIsTestMode: setIsTestMode }}
+        >
           <WagmiConfig config={wagmiConfig}>
             <AnonAadhaarProvider _useTestAadhaar={isTestMode}>
-              <div className="flex flex-col h-screen bg-gray-100 justify-between">
+              <div className="flex flex-col h-screen justify-between">
                 <Header />
                 <Component
                   {...pageProps}

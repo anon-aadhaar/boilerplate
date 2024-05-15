@@ -46,14 +46,14 @@ export const Header: FunctionComponent = () => {
           {/* <Web3Button /> */}
           {isConnected ? (
             <button
-              className="bg-[#EDFFED] rounded-lg text-[#009A08] px-6 py-2 border-2 border-[#009A08] font-rajdhani font-medium"
+              className="bg-[#EDFFED] rounded-lg text-[#009A08] px-6 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
               onClick={() => open()}
             >
               {address && shortenAddress(address)}
             </button>
           ) : (
             <button
-              className="bg-[#009A08] rounded-lg text-white px-6 py-2 font-rajdhani font-medium"
+              className="bg-[#009A08] rounded-lg text-white px-6 py-1 font-rajdhani font-medium"
               onClick={() => open()}
             >
               CONNECT WALLET
