@@ -97,86 +97,87 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   return (
     <>
-      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl w-full sm:max-w-screen-sm p-2 sm:p-8 justify-between">
-        <h1 className="font-bold text-sm sm:text-2xl">
-          Anon Aadhaar Example - Vote
-        </h1>
-        <div className="text-sm sm:text-lg">
-          Next, you have the option to connect your wallet and cast your vote
-          alongside your Anon Aadhaar proof. Your vote will be paired with your
-          proof, and the smart contract will initially verify your proof before
-          processing your vote.
-        </div>
+      <main className="flex flex-col min-h-[75vh] mx-auto justify-center items-center w-full p-4">
+        <div className="max-w-4xl w-full">
+          <h2 className="text-[90px] font-rajdhani font-medium leading-none">
+            CAST YOUR VOTE
+          </h2>
+          <div className="text-md mt-4 mb-8 text-[#717686]">
+            Next, you have the option to cast your vote alongside your Anon
+            Adhaar proof, using your connected ETH address. Your vote will be
+            paired with your proof, and the smart contract will initially verify
+            your proof before processing your vote.
+          </div>
 
-        <div className="flex flex-col items-center gap-5">
-          {voted ? (
-            <>
-              Thank you for casting your vote. Your participation is greatly
-              appreciated.
-            </>
-          ) : (
-            <>
-              <div className="text-sm sm:text-lg font-medium">
-                On a scale of 0 to 5, how likely are you to recommend this hack?
-              </div>
-              <Ratings setRating={setRating} />
-              {isConnected ? (
-                isSuccess ? (
-                  <>
+          <div className="flex flex-col gap-5">
+            {voted ? (
+              <>
+                Thank you for casting your vote. Your participation is greatly
+                appreciated.
+              </>
+            ) : (
+              <>
+                <div className="text-sm sm:text-lg font-medium font-rajdhani">
+                  {"On a scale of 0 to 5, how likely are you to recommend thishack?".toUpperCase()}
+                </div>
+                <Ratings setRating={setRating} />
+
+                <div>
+                  {isConnected ? (
+                    isSuccess ? (
+                      <>
+                        <button
+                          disabled={true}
+                          type="button"
+                          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
+                        >
+                          Vote sent ✅
+                        </button>
+                        <div className="font-bold">
+                          You can check your transaction{" "}
+                          <a
+                            href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
+                            target="_blank"
+                            className="text-blue-500"
+                          >
+                            here
+                          </a>
+                        </div>
+                      </>
+                    ) : isLoading ? (
+                      <Loader />
+                    ) : (
+                      <button
+                        disabled={
+                          rating === undefined || anonAadhaarCore === undefined
+                        }
+                        type="button"
+                        className="inline-block mt-5 bg-[#009A08] rounded-lg text-white px-14 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
+                        onClick={() => {
+                          if (
+                            rating !== undefined &&
+                            anonAadhaarCore !== undefined
+                          )
+                            sendVote(rating, anonAadhaarCore);
+                        }}
+                      >
+                        VOTE
+                      </button>
+                    )
+                  ) : (
                     <button
                       disabled={true}
                       type="button"
                       className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
                     >
-                      Vote sent ✅
+                      You need to connect your wallet first ⬆️
                     </button>
-                    <div className="font-bold">
-                      You can check your transaction{" "}
-                      <a
-                        href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
-                        target="_blank"
-                        className="text-blue-500"
-                      >
-                        here
-                      </a>
-                    </div>
-                  </>
-                ) : isLoading ? (
-                  <Loader />
-                ) : (
-                  <button
-                    disabled={
-                      rating === undefined || anonAadhaarCore === undefined
-                    }
-                    type="button"
-                    className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                    onClick={() => {
-                      if (rating !== undefined && anonAadhaarCore !== undefined)
-                        sendVote(rating, anonAadhaarCore);
-                    }}
-                  >
-                    Vote
-                  </button>
-                )
-              ) : (
-                <button
-                  disabled={true}
-                  type="button"
-                  className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                >
-                  You need to connect your wallet first ⬆️
-                </button>
-              )}
-            </>
-          )}
+                  )}
+                </div>
+              </>
+            )}
+          </div>
         </div>
-
-        <Stepper
-          step={2}
-          onPrevClick={() => {
-            router.push("/");
-          }}
-        />
       </main>
     </>
   );

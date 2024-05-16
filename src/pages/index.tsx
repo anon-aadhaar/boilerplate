@@ -20,10 +20,10 @@ export default function Home({ setUserStatus }: HomeProps) {
   const router = useRouter();
 
   useEffect(() => {
-    anonAadhaar.status === "logged-in"
-      ? setUserStatus(UserStatus.LOGGED_IN)
-      : setUserStatus(UserStatus.LOGGED_OUT);
-  }, [anonAadhaar, setUserStatus]);
+    if (anonAadhaar.status === "logged-in") {
+      router.push("./vote");
+    }
+  }, [anonAadhaar, router]);
 
   const switchAadhaarMode = (isTest: boolean) => {
     console.log("entry: ", useTestAadhaar);

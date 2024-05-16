@@ -5,104 +5,29 @@ type RatingProps = {
 };
 
 export const Ratings: FunctionComponent<RatingProps> = ({ setRating }) => {
+  const ratings: number[] = [0, 1, 2, 3, 4, 5];
+
   return (
     <div className="flex flex-wrap">
-      <div className="flex items-center mr-4">
-        <input
-          id="0"
-          type="radio"
-          value="0"
-          name="colored-radio"
-          className="w-4 h-4  bg-gray-100 border-blue-300 focus:ring-blue-500 focus:ring-2"
-          onClick={(e) => setRating((e.target as HTMLInputElement).value)}
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 "
-        >
-          0
-        </label>
-      </div>
-      <div className="flex items-center mr-4">
-        <input
-          id="1"
-          type="radio"
-          value="1"
-          name="colored-radio"
-          className="w-4 h-4  bg-gray-100 border-blue-300 focus:ring-blue-500 focus:ring-2"
-          onClick={(e) => setRating((e.target as HTMLInputElement).value)}
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 "
-        >
-          1
-        </label>
-      </div>
-      <div className="flex items-center mr-4">
-        <input
-          id="2"
-          type="radio"
-          value="2"
-          name="colored-radio"
-          className="w-4 h-4  bg-gray-100 border-blue-300 focus:ring-blue-500 focus:ring-2"
-          onClick={(e) => setRating((e.target as HTMLInputElement).value)}
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 "
-        >
-          2
-        </label>
-      </div>
-      <div className="flex items-center mr-4">
-        <input
-          id="3"
-          type="radio"
-          value="3"
-          name="colored-radio"
-          className="w-4 h-4  bg-gray-100 border-blue-300 focus:ring-blue-500 focus:ring-2"
-          onClick={(e) => setRating((e.target as HTMLInputElement).value)}
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 "
-        >
-          3
-        </label>
-      </div>
-      <div className="flex items-center mr-4">
-        <input
-          id="4"
-          type="radio"
-          value="4"
-          name="colored-radio"
-          className="w-4 h-4  bg-gray-100 border-blue-300 focus:ring-blue-500 focus:ring-2"
-          onClick={(e) => setRating((e.target as HTMLInputElement).value)}
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 "
-        >
-          4
-        </label>
-      </div>
-      <div className="flex items-center mr-4">
-        <input
-          id="5"
-          type="radio"
-          value="5"
-          name="colored-radio"
-          className="w-4 h-4  bg-gray-100 border-blue-300 focus:ring-blue-500 focus:ring-2"
-          onClick={(e) => setRating((e.target as HTMLInputElement).value)}
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 "
-        >
-          5
-        </label>
-      </div>
+      {ratings.map((rating) => (
+        <div className="flex items-center mr-4" key={rating}>
+          <input
+            id={`rating-${rating}`}
+            type="radio"
+            value={`${rating}`}
+            name="colored-radio"
+            aria-describedby="helper-radio-text"
+            className="w-4 h-4 border-[#FD8B0E] text-[#FD8B0E] border-2 checked:bg-[#FD8B0E] checked:ring-color-[#FD8B0E] focus:ring-offset-0 focus:ring-0"
+            onClick={(e) => setRating((e.target as HTMLInputElement).value)}
+          />
+          <label
+            htmlFor={`rating-${rating}`}
+            className="ml-2 text-md text-black font-rajdhani font-medium"
+          >
+            {rating}
+          </label>
+        </div>
+      ))}
     </div>
   );
 };
