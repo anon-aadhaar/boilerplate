@@ -26,9 +26,7 @@ export default function Home({ setUserStatus }: HomeProps) {
   }, [anonAadhaar, router]);
 
   const switchAadhaarMode = (isTest: boolean) => {
-    console.log("entry: ", useTestAadhaar);
     setIsTestMode(isTest);
-    console.log("out: ", useTestAadhaar);
   };
 
   return (

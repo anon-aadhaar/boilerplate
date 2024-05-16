@@ -26,6 +26,7 @@ const wagmiConfig = createConfig({
 export const AppContext = createContext({
   useTestAadhaar: false,
   setIsTestMode: (isTest: boolean) => {},
+  setVoted: (voted: boolean) => {},
 });
 
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
@@ -34,12 +35,19 @@ export default function App({ Component, pageProps }: AppProps) {
   const [userStatus, setUserStatus] = useState<UserStatus>(
     UserStatus.LOGGED_OUT
   );
+  const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
   const [ready, setReady] = useState(false);
-  const [isTestMode, setIsTestMode] = useState<boolean>(false);
+  const [isTestMode, setIsTestMode] = useState<boolean>(true);
+  const [voted, setVoted] = useState(false);
 
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (voted) setIsDisplayed(true);
+  }, [voted]);
+
   return (
     <>
       <Head>
@@ -60,11 +68,14 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       {ready ? (
         <AppContext.Provider
-          value={{ useTestAadhaar: isTestMode, setIsTestMode: setIsTestMode }}
+          value={{
+            useTestAadhaar: isTestMode,
+            setIsTestMode: setIsTestMode,
+            setVoted: setVoted,
+          }}
         >
           <WagmiConfig config={wagmiConfig}>
             <AnonAadhaarProvider _useTestAadhaar={isTestMode}>
-              {/* <div className="flex flex-col h-screen justify-between"> */}
               <div className="relative min-h-screen flex flex-col justify-between">
                 <div className="flex-grow">
                   <Header />
@@ -74,7 +85,10 @@ export default function App({ Component, pageProps }: AppProps) {
                     setIsTestMode={setIsTestMode}
                   />
                 </div>
-                <Footer />
+                <Footer
+                  isDisplayed={isDisplayed}
+                  setIsDisplayed={setIsDisplayed}
+                />
               </div>
             </AnonAadhaarProvider>
           </WagmiConfig>

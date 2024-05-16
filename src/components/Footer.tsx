@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
+  Dispatch,
   FunctionComponent,
+  SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -13,10 +15,17 @@ import { shortenAddress } from "@/utils";
 import { icons } from "./illustrations";
 import { Toaster } from "./Toaster";
 
-export const Footer: FunctionComponent = () => {
+type FooterProps = {
+  isDisplayed: boolean;
+  setIsDisplayed: Dispatch<SetStateAction<boolean>>;
+};
+
+export const Footer: FunctionComponent<FooterProps> = ({
+  isDisplayed,
+  setIsDisplayed,
+}) => {
   const { useTestAadhaar } = useContext(AppContext);
   const [contractAddr, setContractAddr] = useState<string | null>(null);
-  const [isDisplayed, setIsDisplayed] = useState<boolean>(true);
 
   const blob = new Blob([icons.externalLink], { type: "image/svg+xml" });
   const externalLinkIcon = useMemo(

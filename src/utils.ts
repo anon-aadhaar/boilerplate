@@ -32,7 +32,7 @@ export const getTotalVotes = async (
 };
 
 export const hasVoted = async (
-  userAddress: string,
+  userNullifier: string,
   useTestAadhaar: boolean
 ): Promise<boolean> => {
   const provider = ethers.getDefaultProvider(providerUrl);
@@ -46,7 +46,7 @@ export const hasVoted = async (
     provider
   );
 
-  return await voteContract.checkVoted(userAddress);
+  return await voteContract.checkVoted(userNullifier);
 };
 
 export function shortenAddress(address: string) {
