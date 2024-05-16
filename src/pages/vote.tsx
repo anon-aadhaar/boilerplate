@@ -54,7 +54,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
     write({
       args: [
         _rating,
-        process.env.NEXT_PUBLIC_NULLIFIER_SEED!,
+        _anonAadhaarCore.proof.nullifierSeed,
         _anonAadhaarCore.proof.nullifier,
         _anonAadhaarCore.proof.timestamp,
         address,

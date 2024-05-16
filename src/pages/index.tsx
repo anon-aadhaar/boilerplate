@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
 import { useAccount } from "wagmi";
 import { AppContext } from "./_app";
-import { boolean } from "hardhat/internal/core/params/argumentTypes";
 import { useWeb3Modal } from "@web3modal/react";
 
 type HomeProps = {
@@ -79,9 +78,7 @@ export default function Home({ setUserStatus }: HomeProps) {
                 </div>
                 <p className="font-rajdhani font-medium my-2">START:</p>
                 <LaunchProveModal
-                  nullifierSeed={Number(
-                    process.env.NEXT_PUBLIC_NULLIFIER_SEED!
-                  )}
+                  nullifierSeed={Math.floor(Math.random() * 1983248)}
                   signal={address}
                   buttonStyle={{
                     borderRadius: "8px",

@@ -3,9 +3,16 @@ import votingAbi from "../public/AnonAadhaarVote.json";
 
 const providerUrl = `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_SEPOLIA_PROVIDER_ID}`;
 
-export const getTotalVotes = async (
-  useTestAadhaar: boolean
-): Promise<number> => {
+export const getTotalVotes = async (useTestAadhaar: boolean): Promise<any> => {
+  const voteBreakdown = [
+    { rating: 0, percentage: 0 },
+    { rating: 1, percentage: 0 },
+    { rating: 2, percentage: 0 },
+    { rating: 3, percentage: 0 },
+    { rating: 4, percentage: 0 },
+    { rating: 5, percentage: 0 },
+  ];
+
   const provider = ethers.getDefaultProvider(providerUrl);
   const voteContract = new ethers.Contract(
     `0x${
@@ -28,7 +35,17 @@ export const getTotalVotes = async (
     totalVoteCount += Number(voteCount[1]);
   }
 
-  return totalVoteCount;
+  await Promise.all(
+    voteBreakdown.map(async (rating) => {
+      const voteCount = await voteContract.getProposal(rating.rating);
+      const percentage = Math.floor(
+        (Number(voteCount[1]) / totalVoteCount) * 100
+      );
+      rating.percentage = percentage;
+    })
+  );
+
+  return voteBreakdown;
 };
 
 export const hasVoted = async (
