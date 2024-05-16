@@ -22,12 +22,12 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@anon-aadhaar/contracts@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/contracts/-/contracts-2.0.2.tgz#d89bb3eaadad70b6c5c998013445b6825e999760"
-  integrity sha512-JrIFflrbNV0ngYIJJFOMfvryMLk3Oz/Vo/e3xF7VLXyY+LlV39AikF4I3W01G+OnuPB2+rI/xuNP+y2Mx83zJg==
+"@anon-aadhaar/contracts@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/contracts/-/contracts-2.0.5.tgz#d539374ad586698c97a3ab43f52f9a11057a4dd2"
+  integrity sha512-16rOl2z2SFzwOCpgjdVWx/JmxBI3YKfHNriZGYAclTNSFf3VET7DbVMcrMFZdzRozXMoVzWfD4ZWRHCDAcptmg==
 
-"@anon-aadhaar/core@*", "@anon-aadhaar/core@^2.0.2":
+"@anon-aadhaar/core@*":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@anon-aadhaar/core/-/core-2.0.2.tgz#03da5b3307d9d12173dd967cdbf74646c2969251"
   integrity sha512-RAhV3Pr47AeGfqmqoLjBR5kJt+uUZQaL9ozMNRrhHexkcmRrUeaGcjAqPfHnH9v1Va50EL4IxMK4m4Phq2NAbQ==
@@ -49,10 +49,32 @@
     valid-url "^1.0.9"
     web-worker "1.2.0"
 
-"@anon-aadhaar/react@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/react/-/react-2.0.2.tgz#e6aba83123c679a81973e29236d95feb84d9aa73"
-  integrity sha512-N7Zos8+SuirPfFpOjAY30a3KZV4exP+Xd+G/FdF8RGX09Hi9iykxyoaIGv2j4e2ylEfuUEVBpWQzHXViYaGQWg==
+"@anon-aadhaar/core@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/core/-/core-2.0.5.tgz#10d4c60c3c4cdeeda900dc20fa34fb0457c15c6c"
+  integrity sha512-8E076+SnRZxQPodz9unJZiNBjVEukypeO1n69ln0DqpA0iT3Z0kjzfPyA4LrUc1xZWEVjiJ2cyTsSh3sSbaVKw==
+  dependencies:
+    "@pcd/pcd-types" "^0.10.0"
+    "@pcd/tsconfig" "^0.6.0"
+    "@types/node-forge" "^1.3.8"
+    "@types/snarkjs" "^0.7.6"
+    "@zk-email/helpers" "^6.0.3"
+    buffer "^6.0.3"
+    json-bigint "^1.0.0"
+    localforage "^1.10.0"
+    pako "^2.1.0"
+    react "^18.2.0"
+    react-dom "^18.2.0"
+    snarkjs "^0.7.3"
+    styled-components "^6.0.0-rc.1"
+    uuid "^9.0.0"
+    valid-url "^1.0.9"
+    web-worker "1.2.0"
+
+"@anon-aadhaar/react@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/react/-/react-2.0.5.tgz#380f20b71f8b5988cdc77c8537f218672b1dbec0"
+  integrity sha512-BRdCJyJI2uWhNTipmhsdoPayuSjruzDmaO/2e2wWc1LBvVO6qAS5UHa/FQ6GGDVHlsG511uxIIAltI0+BMY6HQ==
   dependencies:
     "@anon-aadhaar/core" "*"
     "@pcd/pcd-types" "^0.6.0"
@@ -63,6 +85,7 @@
     "@types/styled-components" "^5.1.26"
     "@types/uuid" "^9.0.2"
     "@types/valid-url" "^1.0.4"
+    "@types/webfontloader" "^1.6.38"
     buffer "^6.0.3"
     jsqr "^1.4.0"
     node-forge "^1.3.1"
@@ -71,6 +94,7 @@
     react-icons "^5.0.1"
     react-qr-reader "^3.0.0-beta-1"
     styled-components "^6.0.5"
+    webfontloader "^1.6.28"
 
 "@babel/runtime@^7.17.2", "@babel/runtime@^7.23.2", "@babel/runtime@^7.23.4":
   version "7.24.4"
@@ -1828,6 +1852,11 @@
   resolved "https://registry.yarnpkg.com/@types/valid-url/-/valid-url-1.0.7.tgz#f99e3d89dea90f34a7cc695a6f152728abfb245a"
   integrity sha512-tgsWVG80dM5PVEBSbXUttPJTBCOo0IKbBh4R4z/SHsC5C81A3aaUH4fsbj+JYk7fopApU/Mao1c0EWTE592TSg==
 
+"@types/webfontloader@^1.6.38":
+  version "1.6.38"
+  resolved "https://registry.yarnpkg.com/@types/webfontloader/-/webfontloader-1.6.38.tgz#2cb965a7e7e4a83af6bac67688bc7d1c076107e8"
+  integrity sha512-kUaF72Fv202suFx6yBrwXqeVRMx7hGtJTesyESZgn9sEPCUeDXm2p0SiyS1MTqW74nQP4p7JyrOCwZ7pNFns4w==
+
 "@types/ws@^7.4.4":
   version "7.4.7"
   resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.4.7.tgz#f7c390a36f7a0679aa69de2d501319f4f8d9b702"
@@ -2402,6 +2431,21 @@
     node-forge "^1.3.1"
     pako "^2.1.0"
     pki "^1.1.0"
+    psl "^1.9.0"
+    snarkjs "https://github.com/sampritipanda/snarkjs.git#fef81fc51d17a734637555c6edbd585ecda02d9e"
+
+"@zk-email/helpers@^6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@zk-email/helpers/-/helpers-6.0.3.tgz#6e745a323ddebaf4fd162b1943205a26567670dc"
+  integrity sha512-6uqVIoWcF4lCM34fDCpdh3TBbucK3oeppUTObSLNs49lh5+NUWfgerAGeWHCkNda2ppMg00/+3w0dQwtPyfxIQ==
+  dependencies:
+    addressparser "^1.0.1"
+    atob "^2.1.2"
+    circomlibjs "^0.1.7"
+    libmime "^5.2.1"
+    localforage "^1.10.0"
+    node-forge "^1.3.1"
+    pako "^2.1.0"
     psl "^1.9.0"
     snarkjs "https://github.com/sampritipanda/snarkjs.git#fef81fc51d17a734637555c6edbd585ecda02d9e"
 
@@ -8578,6 +8622,11 @@ web3-utils@^1.3.6:
     number-to-bn "1.7.0"
     randombytes "^2.1.0"
     utf8 "3.0.0"
+
+webfontloader@^1.6.28:
+  version "1.6.28"
+  resolved "https://registry.yarnpkg.com/webfontloader/-/webfontloader-1.6.28.tgz#db786129253cb6e8eae54c2fb05f870af6675bae"
+  integrity sha512-Egb0oFEga6f+nSgasH3E0M405Pzn6y3/9tOVanv/DLfa1YBIgcv90L18YyWnvXkRbIM17v5Kv6IT2N6g1x5tvQ==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

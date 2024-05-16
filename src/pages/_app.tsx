@@ -64,13 +64,16 @@ export default function App({ Component, pageProps }: AppProps) {
         >
           <WagmiConfig config={wagmiConfig}>
             <AnonAadhaarProvider _useTestAadhaar={isTestMode}>
-              <div className="flex flex-col h-screen justify-between">
-                <Header />
-                <Component
-                  {...pageProps}
-                  setUserStatus={setUserStatus}
-                  setIsTestMode={setIsTestMode}
-                />
+              {/* <div className="flex flex-col h-screen justify-between"> */}
+              <div className="relative min-h-screen flex flex-col justify-between">
+                <div className="flex-grow">
+                  <Header />
+                  <Component
+                    {...pageProps}
+                    setUserStatus={setUserStatus}
+                    setIsTestMode={setIsTestMode}
+                  />
+                </div>
                 <Footer />
               </div>
             </AnonAadhaarProvider>

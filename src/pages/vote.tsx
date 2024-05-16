@@ -73,11 +73,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") {
-      deserialize(latestProof as unknown as string).then(
-        (proof: AnonAadhaarCore) => {
-          setAnonAadhaarCore(proof);
-        }
-      );
+      setAnonAadhaarCore(latestProof);
     }
   }, [anonAadhaar, latestProof]);
 
