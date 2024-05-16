@@ -32,8 +32,8 @@ export default function Results() {
 
   const onStartAgain = () => {
     localStorage.removeItem("anonAadhaar");
+    location.reload();
     router.push("/");
-    location.reload;
   };
 
   return (

@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import Head from "next/head";
-import { useState, useEffect, createContext, SetStateAction } from "react";
+import { useState, useEffect, createContext } from "react";
 import type { AppProps } from "next/app";
 import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import {
@@ -12,7 +12,6 @@ import { Header } from "../components/Header";
 import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
 import { Web3Modal } from "@web3modal/react";
 import { Footer } from "@/components/Footer";
-import { UserStatus } from "@/interface";
 
 const chains = [sepolia];
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
@@ -32,9 +31,6 @@ export const AppContext = createContext({
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [userStatus, setUserStatus] = useState<UserStatus>(
-    UserStatus.LOGGED_OUT
-  );
   const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
   const [ready, setReady] = useState(false);
   const [isTestMode, setIsTestMode] = useState<boolean>(true);
@@ -79,11 +75,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <div className="relative min-h-screen flex flex-col justify-between">
                 <div className="flex-grow">
                   <Header />
-                  <Component
-                    {...pageProps}
-                    setUserStatus={setUserStatus}
-                    setIsTestMode={setIsTestMode}
-                  />
+                  <Component {...pageProps} setIsTestMode={setIsTestMode} />
                 </div>
                 <Footer
                   isDisplayed={isDisplayed}

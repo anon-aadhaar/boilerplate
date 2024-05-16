@@ -1,10 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
-import {
-  AnonAadhaarCore,
-  packGroth16Proof,
-  deserialize,
-} from "@anon-aadhaar/core";
+import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
 import {
   useEffect,
   useState,
@@ -118,27 +114,6 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
             <div>
               {isConnected ? (
-                // isSuccess ? (
-                //   <>
-                //     <button
-                //       disabled={true}
-                //       type="button"
-                //       className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                //     >
-                //       Vote sent ✅
-                //     </button>
-                //     <div className="font-bold">
-                //       You can check your transaction{" "}
-                //       <a
-                //         href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
-                //         target="_blank"
-                //         className="text-blue-500"
-                //       >
-                //         here
-                //       </a>
-                //     </div>
-                //   </>
-                // ) :
                 isLoading ? (
                   <Loader />
                 ) : (
