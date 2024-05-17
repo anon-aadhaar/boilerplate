@@ -6,6 +6,7 @@ import { Loader } from "@/components/Loader";
 import { icons } from "@/components/illustrations";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useAnonAadhaar } from "@anon-aadhaar/react";
 
 const getBarHeight = (percentage: number) => {
   return `${percentage}%`;
@@ -20,6 +21,7 @@ export default function Results() {
   const [voteBreakdown, setVoteBreakdown] = useState<Rating[] | null>(null);
   const { useTestAadhaar } = useContext(AppContext);
   const router = useRouter();
+  const [, startReq] = useAnonAadhaar();
 
   const blob = new Blob([icons.leftArrow], { type: "image/svg+xml" });
   const leftArrow = useMemo(() => URL.createObjectURL(blob), [icons.leftArrow]);
@@ -31,8 +33,7 @@ export default function Results() {
   }, [useTestAadhaar]);
 
   const onStartAgain = () => {
-    localStorage.removeItem("anonAadhaar");
-    location.reload();
+    startReq({ type: "logout" });
     router.push("/");
   };
 

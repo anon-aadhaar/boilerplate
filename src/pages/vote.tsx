@@ -29,7 +29,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
   const router = useRouter();
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { isLoading, isSuccess, write } = useContractWrite({
     address: `0x${
       useTestAadhaar
         ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
@@ -81,12 +81,6 @@ export default function Vote({ setUserStatus }: VoteProps) {
         )
       : null;
   }, [address, useTestAadhaar, router, setVoted, anonAadhaarCore]);
-
-  useEffect(() => {
-    isConnected
-      ? setUserStatus(UserStatus.WALLET_CONNECTED)
-      : setUserStatus(UserStatus.WALLET_NOT_CONNECTED);
-  }, [isConnected, setUserStatus]);
 
   useEffect(() => {
     if (isSuccess) router.push("./results");
