@@ -43,51 +43,39 @@ export default function Home() {
           <div className="flex w-full gap-8 mb-8">
             {isConnected ? (
               <div>
-                <p className="font-rajdhani font-medium mb-2">
-                  CHOOSE YOUR MODE:
-                </p>
                 <div className="flex gap-4 place-content-center">
-                  {useTestAadhaar ? (
-                    <button
-                      className="bg-[#EDFFED] rounded-lg text-[#009A08] px-6 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
-                      onClick={() => switchAadhaarMode(false)}
-                    >
-                      TRY REAL CREDENTIALS
-                    </button>
-                  ) : (
-                    <button className="bg-[#009A08] rounded-lg text-white px-6 py-1 border-2 border-[#009A08] font-rajdhani font-medium">
-                      TRY REAL CREDENTIALS
-                    </button>
-                  )}
-                  {useTestAadhaar ? (
-                    <button className="bg-[#009A08] rounded-lg text-white px-6 py-1 border-2 border-[#009A08] font-rajdhani font-medium">
-                      TRY TEST CREDENTIALS
-                    </button>
-                  ) : (
-                    <button
-                      className="bg-[#EDFFED] rounded-lg text-[#009A08] px-6 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
-                      onClick={() => switchAadhaarMode(true)}
-                    >
-                      TRY TEST CREDENTIALS
-                    </button>
-                  )}
+                  <LaunchProveModal
+                    nullifierSeed={Math.floor(Math.random() * 1983248)}
+                    signal={address}
+                    buttonStyle={{
+                      borderRadius: "8px",
+                      border: "solid",
+                      borderWidth: "1px",
+                      boxShadow: "none",
+                      fontWeight: 500,
+                      borderColor: "#009A08",
+                      color: "#009A08",
+                      fontFamily: "rajdhani",
+                    }}
+                    buttonTitle={"USE REAL CREDENTIALS"}
+                  />
+                  <LaunchProveModal
+                    nullifierSeed={Math.floor(Math.random() * 1983248)}
+                    signal={address}
+                    buttonStyle={{
+                      borderRadius: "8px",
+                      border: "solid",
+                      borderWidth: "1px",
+                      boxShadow: "none",
+                      fontWeight: 500,
+                      borderColor: "#009A08",
+                      color: "#009A08",
+                      fontFamily: "rajdhani",
+                    }}
+                    buttonTitle={"USE TEST CREDENTIALS"}
+                    useTestAadhaar={true}
+                  />
                 </div>
-                <p className="font-rajdhani font-medium my-2">START:</p>
-                <LaunchProveModal
-                  nullifierSeed={Math.floor(Math.random() * 1983248)}
-                  signal={address}
-                  buttonStyle={{
-                    borderRadius: "8px",
-                    border: "solid",
-                    borderWidth: "1px",
-                    boxShadow: "none",
-                    fontWeight: 600,
-                    borderColor: "#009A08",
-                    color: "#009A08",
-                    fontFamily: "rajdhani",
-                  }}
-                  buttonTitle={"LOGIN"}
-                />
               </div>
             ) : (
               <button

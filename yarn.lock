@@ -22,10 +22,10 @@
   resolved "https://registry.yarnpkg.com/@alloc/quick-lru/-/quick-lru-5.2.0.tgz#7bf68b20c0a350f936915fcae06f58e32007ce30"
   integrity sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==
 
-"@anon-aadhaar/contracts@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/contracts/-/contracts-2.0.5.tgz#d539374ad586698c97a3ab43f52f9a11057a4dd2"
-  integrity sha512-16rOl2z2SFzwOCpgjdVWx/JmxBI3YKfHNriZGYAclTNSFf3VET7DbVMcrMFZdzRozXMoVzWfD4ZWRHCDAcptmg==
+"@anon-aadhaar/contracts@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/contracts/-/contracts-2.0.6.tgz#fd8dd3da980035944ffceb23daba0498b72476f4"
+  integrity sha512-UP2Gfk8ZC/icPPYqrB3mfHktfCqfts3joiQQ90yzodKHb2Dc4PVXCjygMCbXWoLFyYq6EooVYX2MXKBJNH/hUg==
 
 "@anon-aadhaar/core@*":
   version "2.0.2"
@@ -49,10 +49,10 @@
     valid-url "^1.0.9"
     web-worker "1.2.0"
 
-"@anon-aadhaar/core@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/core/-/core-2.0.5.tgz#10d4c60c3c4cdeeda900dc20fa34fb0457c15c6c"
-  integrity sha512-8E076+SnRZxQPodz9unJZiNBjVEukypeO1n69ln0DqpA0iT3Z0kjzfPyA4LrUc1xZWEVjiJ2cyTsSh3sSbaVKw==
+"@anon-aadhaar/core@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/core/-/core-2.0.6.tgz#3de901f0f1a81a24e8e407d0da0cd87bbecce0a2"
+  integrity sha512-8YzNaTL+01pL83Y2Qx2AfHC8V1a8aH9pXWAiRGBoRHtYadXAjieK5b2RFM9YrwB7kyn0NvRA1zmZSKKBN+M8aw==
   dependencies:
     "@pcd/pcd-types" "^0.10.0"
     "@pcd/tsconfig" "^0.6.0"
@@ -71,10 +71,10 @@
     valid-url "^1.0.9"
     web-worker "1.2.0"
 
-"@anon-aadhaar/react@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@anon-aadhaar/react/-/react-2.0.5.tgz#380f20b71f8b5988cdc77c8537f218672b1dbec0"
-  integrity sha512-BRdCJyJI2uWhNTipmhsdoPayuSjruzDmaO/2e2wWc1LBvVO6qAS5UHa/FQ6GGDVHlsG511uxIIAltI0+BMY6HQ==
+"@anon-aadhaar/react@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@anon-aadhaar/react/-/react-2.0.6.tgz#d37c82cd1beea1c3761df603cc8c1bc344098565"
+  integrity sha512-wOO2yJUeZPvrEIPUpFCCgaAQpIWAX57u8dgEeZ8Bb7hc/r45vCPf8DBsCfsLi/LGr2CL6xCUNWGujSFcGqYFlQ==
   dependencies:
     "@anon-aadhaar/core" "*"
     "@pcd/pcd-types" "^0.6.0"

@@ -71,7 +71,7 @@ export default function App({ Component, pageProps }: AppProps) {
           }}
         >
           <WagmiConfig config={wagmiConfig}>
-            <AnonAadhaarProvider _useTestAadhaar={isTestMode}>
+            <AnonAadhaarProvider>
               <div className="relative min-h-screen flex flex-col justify-between">
                 <div className="flex-grow">
                   <Header />
