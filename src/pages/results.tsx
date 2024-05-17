@@ -3,7 +3,7 @@ import { getTotalVotes } from "@/utils";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { AppContext } from "./_app";
 import { Loader } from "@/components/Loader";
-import { icons } from "@/components/illustrations";
+import { icons } from "@/styles/illustrations";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useAnonAadhaar } from "@anon-aadhaar/react";
@@ -77,7 +77,7 @@ export default function Results() {
         <a
           target={"_blank"}
           rel={"noreferrer"}
-          href="https://anon-aadhaar-documentation.vercel.app/docs/quick-setup"
+          href="https://anon-aadhaar-documentation.vercel.app/docs/nullifiers"
           className="underline"
         >
           nullifier

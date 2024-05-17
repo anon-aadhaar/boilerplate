@@ -7,11 +7,7 @@ import { useAccount } from "wagmi";
 import { AppContext } from "./_app";
 import { useWeb3Modal } from "@web3modal/react";
 
-type HomeProps = {
-  setUserStatus: Dispatch<SetStateAction<UserStatus>>;
-};
-
-export default function Home({ setUserStatus }: HomeProps) {
+export default function Home() {
   const [anonAadhaar] = useAnonAadhaar();
   const { useTestAadhaar, setIsTestMode } = useContext(AppContext);
   const { isConnected, address } = useAccount();

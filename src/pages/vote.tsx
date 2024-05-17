@@ -1,27 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
 import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
-import {
-  useEffect,
-  useState,
-  SetStateAction,
-  Dispatch,
-  useContext,
-} from "react";
+import { useEffect, useState, useContext } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useAccount, useContractWrite } from "wagmi";
 import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
-import { UserStatus } from "@/interface";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
 
-type VoteProps = {
-  setUserStatus: Dispatch<SetStateAction<UserStatus>>;
-};
-
-export default function Vote({ setUserStatus }: VoteProps) {
+export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
   const { useTestAadhaar, setVoted } = useContext(AppContext);
   const [, latestProof] = useProver();
@@ -39,7 +28,6 @@ export default function Vote({ setUserStatus }: VoteProps) {
     functionName: "voteForProposal",
   });
 
-  console.log("Use test Aadhaar: ", useTestAadhaar);
   const sendVote = async (
     _rating: string,
     _anonAadhaarCore: AnonAadhaarCore

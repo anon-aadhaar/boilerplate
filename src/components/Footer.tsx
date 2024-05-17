@@ -12,7 +12,7 @@ import imgGithub from "../../public/github-mark.png";
 import Image from "next/image";
 import { AppContext } from "@/pages/_app";
 import { shortenAddress } from "@/utils";
-import { icons } from "./illustrations";
+import { icons } from "../styles/illustrations";
 import { Toaster } from "./Toaster";
 
 type FooterProps = {

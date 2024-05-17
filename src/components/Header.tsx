@@ -3,7 +3,7 @@ import { FunctionComponent, useMemo } from "react";
 import Image from "next/image";
 import { useWeb3Modal } from "@web3modal/react";
 import { useAccount } from "wagmi";
-import { icons } from "./illustrations";
+import { icons } from "../styles/illustrations";
 import { shortenAddress } from "@/utils";
 
 export const Header: FunctionComponent = () => {
