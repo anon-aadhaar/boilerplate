@@ -1,100 +1,92 @@
 /* eslint-disable react/no-unescaped-entities */
-import { LogInWithAnonAadhaar, useAnonAadhaar } from "@anon-aadhaar/react";
+import { LaunchProveModal, useAnonAadhaar } from "@anon-aadhaar/react";
 import { Dispatch, useEffect, SetStateAction, useContext } from "react";
-import { Stepper } from "../components/Stepper";
 import { useRouter } from "next/router";
 import { UserStatus } from "@/interface";
 import { useAccount } from "wagmi";
 import { AppContext } from "./_app";
+import { useWeb3Modal } from "@web3modal/react";
 
-type HomeProps = {
-  setUserStatus: Dispatch<SetStateAction<UserStatus>>;
-  setIsTestMode: Dispatch<SetStateAction<boolean>>;
-};
-
-export default function Home({ setUserStatus, setIsTestMode }: HomeProps) {
+export default function Home() {
   const [anonAadhaar] = useAnonAadhaar();
+  const { useTestAadhaar, setIsTestMode } = useContext(AppContext);
   const { isConnected, address } = useAccount();
+  const { open } = useWeb3Modal();
   const router = useRouter();
 
   useEffect(() => {
-    anonAadhaar.status === "logged-in"
-      ? setUserStatus(UserStatus.LOGGED_IN)
-      : setUserStatus(UserStatus.LOGGED_OUT);
-  }, [anonAadhaar, setUserStatus]);
-  const { useTestAadhaar } = useContext(AppContext);
+    if (anonAadhaar.status === "logged-in") {
+      router.push("./vote");
+    }
+  }, [anonAadhaar, router]);
 
-  const switchAadhaar = () => {
-    setIsTestMode(!useTestAadhaar);
+  const switchAadhaarMode = (isTest: boolean) => {
+    setIsTestMode(isTest);
   };
 
   return (
     <>
-      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl w-full sm:max-w-screen-sm p-4 sm:p-8 justify-between">
-        <h1 className="font-bold text-sm sm:text-2xl">
-          Anon Aadhaar Example - Login
-        </h1>
-        <div className="text-sm sm:text-lg">
-          Initially, you'll need to log in using your Aadhaar card. During the
-          login process, a proof is generated to confirm the authenticity of
-          your Aadhaar card, which is signed by the Indian government. This
-          proof is then verified to grant you access.
-          <br></br>
-          Verify your identity anonymously using your Aadhaar card.
-        </div>
+      <main className="flex flex-col min-h-[75vh] mx-auto justify-center items-center w-full p-4">
+        <div className="max-w-4xl w-full">
+          <h6 className="text-[36px] font-rajdhani font-medium leading-none">
+            ANON AADHAAR
+          </h6>
+          <h2 className="text-[90px] font-rajdhani font-medium leading-none">
+            EXAMPLE VOTING APP
+          </h2>
+          <div className="text-md mt-4 mb-8 text-[#717686]">
+            This process ensures anonymity by utilizing the Aadhaar secure QR
+            code (present on e-Aadhaar and the printed Aadhaar letter) which
+            preserves the confidentiality of the Aadhaar number.
+          </div>
 
-        <div className="flex w-full place-content-center gap-8">
-          {isConnected ? (
-            <div>
-              <div className="flex gap-8 place-content-center">
-                <LogInWithAnonAadhaar
-                  nullifierSeed={Number(
-                    process.env.NEXT_PUBLIC_NULLIFIER_SEED!
-                  )}
-                  signal={address}
-                />
-                <button
-                  onClick={switchAadhaar}
-                  type="button"
-                  className="rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  Switch for {useTestAadhaar ? "real" : "test"}
-                </button>
+          <div className="flex w-full gap-8 mb-8">
+            {isConnected ? (
+              <div>
+                <div className="flex gap-4 place-content-center">
+                  <LaunchProveModal
+                    nullifierSeed={Math.floor(Math.random() * 1983248)}
+                    signal={address}
+                    buttonStyle={{
+                      borderRadius: "8px",
+                      border: "solid",
+                      borderWidth: "1px",
+                      boxShadow: "none",
+                      fontWeight: 500,
+                      borderColor: "#009A08",
+                      color: "#009A08",
+                      fontFamily: "rajdhani",
+                    }}
+                    buttonTitle={"USE REAL CREDENTIALS"}
+                  />
+                  <LaunchProveModal
+                    nullifierSeed={Math.floor(Math.random() * 1983248)}
+                    signal={address}
+                    buttonStyle={{
+                      borderRadius: "8px",
+                      border: "solid",
+                      borderWidth: "1px",
+                      boxShadow: "none",
+                      fontWeight: 500,
+                      borderColor: "#009A08",
+                      color: "#009A08",
+                      fontFamily: "rajdhani",
+                    }}
+                    buttonTitle={"USE TEST CREDENTIALS"}
+                    useTestAadhaar={true}
+                  />
+                </div>
               </div>
-              <h3 className="flex font-light text-lg mt-5 text-center">
-                You're using the
-                <p className="font-bold">
-                  &ensp;
-                  {useTestAadhaar ? "test" : "real"} &ensp;
-                </p>
-                Aadhaar mode
-              </h3>
-            </div>
-          ) : (
-            <button
-              disabled={true}
-              type="button"
-              className="rounded-md px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-            >
-              You need to connect your wallet first ⬆️
-            </button>
-          )}
+            ) : (
+              <button
+                className="bg-[#009A08] rounded-lg text-white px-6 py-1 font-rajdhani font-medium"
+                onClick={() => open()}
+              >
+                CONNECT WALLET
+              </button>
+            )}
+          </div>
         </div>
-
-        {anonAadhaar.status === "logged-in" ? (
-          <>
-            <Stepper
-              step={1}
-              onNextClick={() => {
-                router.push("/vote");
-              }}
-            />
-          </>
-        ) : (
-          <>
-            <Stepper step={1} />
-          </>
-        )}
       </main>
     </>
   );

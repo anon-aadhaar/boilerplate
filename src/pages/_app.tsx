@@ -12,7 +12,6 @@ import { Header } from "../components/Header";
 import { configureChains, createConfig, sepolia, WagmiConfig } from "wagmi";
 import { Web3Modal } from "@web3modal/react";
 import { Footer } from "@/components/Footer";
-import { UserStatus } from "@/interface";
 
 const chains = [sepolia];
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
@@ -23,20 +22,28 @@ const wagmiConfig = createConfig({
   connectors: w3mConnectors({ projectId, chains }),
   publicClient,
 });
-export const AppContext = createContext({ useTestAadhaar: false });
+export const AppContext = createContext({
+  useTestAadhaar: false,
+  setIsTestMode: (isTest: boolean) => {},
+  setVoted: (voted: boolean) => {},
+});
 
 const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [userStatus, setUserStatus] = useState<UserStatus>(
-    UserStatus.LOGGED_OUT
-  );
+  const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
   const [ready, setReady] = useState(false);
-  const [isTestMode, setIsTestMode] = useState<boolean>(false);
+  const [isTestMode, setIsTestMode] = useState<boolean>(true);
+  const [voted, setVoted] = useState(false);
 
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (voted) setIsDisplayed(true);
+  }, [voted]);
+
   return (
     <>
       <Head>
@@ -56,17 +63,24 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {ready ? (
-        <AppContext.Provider value={{ useTestAadhaar: isTestMode }}>
+        <AppContext.Provider
+          value={{
+            useTestAadhaar: isTestMode,
+            setIsTestMode: setIsTestMode,
+            setVoted: setVoted,
+          }}
+        >
           <WagmiConfig config={wagmiConfig}>
-            <AnonAadhaarProvider _useTestAadhaar={isTestMode}>
-              <div className="flex flex-col h-screen bg-gray-100 justify-between">
-                <Header />
-                <Component
-                  {...pageProps}
-                  setUserStatus={setUserStatus}
-                  setIsTestMode={setIsTestMode}
+            <AnonAadhaarProvider>
+              <div className="relative min-h-screen flex flex-col justify-between">
+                <div className="flex-grow">
+                  <Header />
+                  <Component {...pageProps} setIsTestMode={setIsTestMode} />
+                </div>
+                <Footer
+                  isDisplayed={isDisplayed}
+                  setIsDisplayed={setIsDisplayed}
                 />
-                <Footer text={userStatus} />
               </div>
             </AnonAadhaarProvider>
           </WagmiConfig>

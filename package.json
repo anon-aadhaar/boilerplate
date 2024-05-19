@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@anon-aadhaar/contracts": "^2.0.2",
-    "@anon-aadhaar/core": "^2.0.2",
-    "@anon-aadhaar/react": "^2.0.2",
+    "@anon-aadhaar/contracts": "^2.0.6",
+    "@anon-aadhaar/core": "^2.0.6",
+    "@anon-aadhaar/react": "^2.0.6",
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@tailwindcss/forms": "^0.5.7",
     "@types/node": "20.4.1",
     "@types/react": "^18.2.48",
     "@types/react-dom": "18.2.6",

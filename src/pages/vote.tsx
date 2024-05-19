@@ -1,46 +1,28 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
-import {
-  AnonAadhaarCore,
-  packGroth16Proof,
-  deserialize,
-} from "@anon-aadhaar/core";
-import {
-  useEffect,
-  useState,
-  SetStateAction,
-  Dispatch,
-  useContext,
-} from "react";
+import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
+import { useEffect, useState, useContext } from "react";
 import { Ratings } from "@/components/Ratings";
-import { Stepper } from "@/components/Stepper";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
 import { useAccount, useContractWrite } from "wagmi";
 import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
-import { UserStatus } from "@/interface";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
 
-type VoteProps = {
-  setUserStatus: Dispatch<SetStateAction<UserStatus>>;
-};
-
-export default function Vote({ setUserStatus }: VoteProps) {
-  // Use the Country Identity hook to get the status of the user.
+export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
-  const { useTestAadhaar } = useContext(AppContext);
+  const { useTestAadhaar, setVoted } = useContext(AppContext);
   const [, latestProof] = useProver();
-  const [voted, setVoted] = useState(false);
   const [anonAadhaarCore, setAnonAadhaarCore] = useState<AnonAadhaarCore>();
   const router = useRouter();
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { isLoading, isSuccess, write } = useContractWrite({
     address: `0x${
       useTestAadhaar
         ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
-        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD || ""
+        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
     }`,
     abi: anonAadhaarVote.abi,
     functionName: "voteForProposal",
@@ -56,7 +38,7 @@ export default function Vote({ setUserStatus }: VoteProps) {
     write({
       args: [
         _rating,
-        process.env.NEXT_PUBLIC_NULLIFIER_SEED!,
+        _anonAadhaarCore.proof.nullifierSeed,
         _anonAadhaarCore.proof.nullifier,
         _anonAadhaarCore.proof.timestamp,
         address,
@@ -73,75 +55,48 @@ export default function Vote({ setUserStatus }: VoteProps) {
 
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") {
-      deserialize(latestProof as unknown as string).then(
-        (proof: AnonAadhaarCore) => {
-          setAnonAadhaarCore(proof);
-        }
-      );
+      setAnonAadhaarCore(latestProof);
     }
   }, [anonAadhaar, latestProof]);
 
   useEffect(() => {
-    address
-      ? hasVoted(address.toString(), useTestAadhaar).then((response) =>
-          setVoted(response)
+    anonAadhaarCore?.proof.nullifier
+      ? hasVoted(anonAadhaarCore?.proof.nullifier, useTestAadhaar).then(
+          (response) => {
+            if (response) router.push("/results");
+            setVoted(response);
+          }
         )
       : null;
-  }, [address, useTestAadhaar]);
+  }, [address, useTestAadhaar, router, setVoted, anonAadhaarCore]);
 
   useEffect(() => {
-    isConnected
-      ? setUserStatus(UserStatus.WALLET_CONNECTED)
-      : setUserStatus(UserStatus.WALLET_NOT_CONNECTED);
-  }, [isConnected, setUserStatus]);
+    if (isSuccess) router.push("./results");
+  }, [router, isSuccess]);
 
   return (
     <>
-      <main className="flex flex-col min-h-[75vh] mx-auto rounded-2xl w-full sm:max-w-screen-sm p-2 sm:p-8 justify-between">
-        <h1 className="font-bold text-sm sm:text-2xl">
-          Anon Aadhaar Example - Vote
-        </h1>
-        <div className="text-sm sm:text-lg">
-          Next, you have the option to connect your wallet and cast your vote
-          alongside your Anon Aadhaar proof. Your vote will be paired with your
-          proof, and the smart contract will initially verify your proof before
-          processing your vote.
-        </div>
+      <main className="flex flex-col min-h-[75vh] mx-auto justify-center items-center w-full p-4">
+        <div className="max-w-4xl w-full">
+          <h2 className="text-[90px] font-rajdhani font-medium leading-none">
+            CAST YOUR VOTE
+          </h2>
+          <div className="text-md mt-4 mb-8 text-[#717686]">
+            Next, you have the option to cast your vote alongside your Anon
+            Adhaar proof, using your connected ETH address. Your vote will be
+            paired with your proof, and the smart contract will initially verify
+            your proof before processing your vote.
+          </div>
 
-        <div className="flex flex-col items-center gap-5">
-          {voted ? (
-            <>
-              Thank you for casting your vote. Your participation is greatly
-              appreciated.
-            </>
-          ) : (
-            <>
-              <div className="text-sm sm:text-lg font-medium">
-                On a scale of 0 to 5, how likely are you to recommend this hack?
-              </div>
-              <Ratings setRating={setRating} />
+          <div className="flex flex-col gap-5">
+            <div className="text-sm sm:text-lg font-medium font-rajdhani">
+              {"On a scale of 0 to 5, how likely are you to recommend this hack?".toUpperCase()}
+            </div>
+            <Ratings setRating={setRating} />
+
+            <div>
               {isConnected ? (
-                isSuccess ? (
-                  <>
-                    <button
-                      disabled={true}
-                      type="button"
-                      className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300"
-                    >
-                      Vote sent ✅
-                    </button>
-                    <div className="font-bold">
-                      You can check your transaction{" "}
-                      <a
-                        href={`https://sepolia.etherscan.io/tx/${data?.hash}`}
-                        target="_blank"
-                        className="text-blue-500"
-                      >
-                        here
-                      </a>
-                    </div>
-                  </>
-                ) : isLoading ? (
+                isLoading ? (
                   <Loader />
                 ) : (
                   <button
@@ -149,13 +104,13 @@ export default function Vote({ setUserStatus }: VoteProps) {
                       rating === undefined || anonAadhaarCore === undefined
                     }
                     type="button"
-                    className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-block mt-5 bg-[#009A08] rounded-lg text-white px-14 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
                     onClick={() => {
                       if (rating !== undefined && anonAadhaarCore !== undefined)
                         sendVote(rating, anonAadhaarCore);
                     }}
                   >
-                    Vote
+                    VOTE
                   </button>
                 )
               ) : (
@@ -167,16 +122,9 @@ export default function Vote({ setUserStatus }: VoteProps) {
                   You need to connect your wallet first ⬆️
                 </button>
               )}
-            </>
-          )}
+            </div>
+          </div>
         </div>
-
-        <Stepper
-          step={2}
-          onPrevClick={() => {
-            router.push("/");
-          }}
-        />
       </main>
     </>
   );
