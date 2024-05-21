@@ -6,6 +6,8 @@ import { useAccount } from "wagmi";
 import { AppContext } from "./_app";
 import { useWeb3Modal } from "@web3modal/react";
 
+// This is a trick to enable having both modes in under the same page.
+// This could be removed and only the <LaunchProveModal /> could be displayed.
 const LaunchMode = ({
   isTest,
   setIsTestMode,
@@ -80,37 +82,6 @@ export default function Home() {
                     setIsTestMode={setIsTestMode}
                     address={address as string}
                   />
-                  {/* <LaunchProveModal
-                    nullifierSeed={Math.floor(Math.random() * 1983248)}
-                    signal={address}
-                    buttonStyle={{
-                      borderRadius: "8px",
-                      border: "solid",
-                      borderWidth: "1px",
-                      boxShadow: "none",
-                      fontWeight: 500,
-                      borderColor: "#009A08",
-                      color: "#009A08",
-                      fontFamily: "rajdhani",
-                    }}
-                    buttonTitle={"USE REAL CREDENTIALS"}
-                  />
-                  <LaunchProveModal
-                    nullifierSeed={Math.floor(Math.random() * 1983248)}
-                    signal={address}
-                    buttonStyle={{
-                      borderRadius: "8px",
-                      border: "solid",
-                      borderWidth: "1px",
-                      boxShadow: "none",
-                      fontWeight: 500,
-                      borderColor: "#009A08",
-                      color: "#009A08",
-                      fontFamily: "rajdhani",
-                    }}
-                    buttonTitle={"USE TEST CREDENTIALS"}
-                    useTestAadhaar={true}
-                  /> */}
                 </div>
               </div>
             ) : (
