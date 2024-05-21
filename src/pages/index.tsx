@@ -4,7 +4,7 @@ import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { AppContext } from "./_app";
-import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 
 // This is a trick to enable having both modes in under the same page.
 // This could be removed and only the <LaunchProveModal /> could be displayed.

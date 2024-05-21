@@ -1,6 +1,12 @@
+"use client";
+
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
-import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
+import {
+  AnonAadhaarCore,
+  deserialize,
+  packGroth16Proof,
+} from "@anon-aadhaar/core";
 import { useEffect, useState, useContext } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Loader } from "@/components/Loader";
@@ -11,13 +17,17 @@ import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
 import { sepolia } from "@wagmi/core/chains";
 import { writeContract } from "@wagmi/core";
+import { walletConnect } from "wagmi/connectors";
+import { wagmiConfig } from "../config";
 
-const config = createConfig({
-  chains: [sepolia],
-  transports: {
-    [sepolia.id]: http(),
-  },
-});
+// const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
+// const config = createConfig({
+//   chains: [sepolia],
+//   transports: {
+//     [sepolia.id]: http(),
+//   },
+//   connectors: [walletConnect({ projectId })],
+// });
 
 export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
@@ -39,7 +49,7 @@ export default function Vote() {
     );
     setIsLoading(true);
     try {
-      const voteTx = await writeContract(config, {
+      const voteTx = await writeContract(wagmiConfig, {
         abi: anonAadhaarVote.abi,
         address: `0x${
           useTestAadhaar
@@ -68,14 +78,21 @@ export default function Vote() {
     } catch (e) {
       setIsLoading(false);
       console.log(e);
-      throw new Error("Vote tx failed.");
     }
   };
 
   useEffect(() => {
-    if (anonAadhaar.status === "logged-in") {
-      setAnonAadhaarCore(latestProof);
-    }
+    // if (anonAadhaar.status === "logged-in") {
+    const aaObj = localStorage.getItem("anonAadhaar");
+    const anonAadhaarProofs = JSON.parse(aaObj!).anonAadhaarProofs;
+
+    deserialize(
+      anonAadhaarProofs[Object.keys(anonAadhaarProofs).length - 1].pcd
+    ).then((result) => {
+      console.log(result);
+      setAnonAadhaarCore(result);
+    });
+    // }
   }, [anonAadhaar, latestProof]);
 
   useEffect(() => {
@@ -125,7 +142,6 @@ export default function Vote() {
                     type="button"
                     className="inline-block mt-5 bg-[#009A08] rounded-lg text-white px-14 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
                     onClick={() => {
-                      console.log("coucou");
                       if (rating !== undefined && anonAadhaarCore !== undefined)
                         sendVote(rating, anonAadhaarCore);
                     }}

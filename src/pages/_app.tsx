@@ -4,33 +4,40 @@ import { useState, useEffect, createContext } from "react";
 import type { AppProps } from "next/app";
 import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import { Header } from "../components/Header";
-import { WagmiProvider } from "wagmi";
+import { WagmiProvider, http, createConfig } from "wagmi";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { Footer } from "@/components/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { sepolia } from "viem/chains";
+import { walletConnect } from "wagmi/connectors";
 import { defaultWagmiConfig } from "@web3modal/wagmi";
+import { wagmiConfig } from "../config";
 
 const queryClient = new QueryClient();
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
 
-const metadata = {
-  name: "Anon Aadhaar",
-  description: "Example voting app",
-  url: "https://web3modal.com",
-  icons: ["https://avatars.githubusercontent.com/u/37784886"],
-};
+// const metadata = {
+//   name: "Anon Aadhaar",
+//   description: "Example voting app",
+//   url: "https://localhost:3000/",
+//   icons: ["https://avatars.githubusercontent.com/u/37784886"],
+// };
 
-const chains = [sepolia] as const;
-
-const config = defaultWagmiConfig({
-  chains,
-  projectId,
-  metadata,
-});
+// export const config = createConfig({
+//   chains: [sepolia],
+//   connectors: [
+//     walletConnect({
+//       projectId,
+//       metadata,
+//     }),
+//   ],
+//   transports: {
+//     [sepolia.id]: http(),
+//   },
+// });
 
 createWeb3Modal({
-  wagmiConfig: config,
+  wagmiConfig: wagmiConfig,
   projectId,
 });
 
@@ -80,7 +87,7 @@ export default function App({ Component, pageProps }: AppProps) {
             setVoted: setVoted,
           }}
         >
-          <WagmiProvider config={config}>
+          <WagmiProvider config={wagmiConfig}>
             <QueryClientProvider client={queryClient}>
               <AnonAadhaarProvider>
                 <div className="relative min-h-screen flex flex-col justify-between">
