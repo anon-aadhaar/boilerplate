@@ -15,12 +15,12 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@tailwindcss/forms": "^0.5.7",
+    "@tanstack/react-query": "^5.37.1",
     "@types/node": "20.4.1",
     "@types/react": "^18.2.48",
     "@types/react-dom": "18.2.6",
-    "@walletconnect/ethereum-provider": "^2.10.0",
-    "@web3modal/ethereum": "^2.7.1",
-    "@web3modal/react": "^2.7.1",
+    "@web3modal/wagmi": "^4.2.0-alpha.0",
+    "add": "^2.0.6",
     "dotenv": "^16.3.1",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
@@ -28,7 +28,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "5.1.6",
-    "wagmi": "^1.4.1"
+    "viem": "^2.11.1",
+    "wagmi": "^2.9.3",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",

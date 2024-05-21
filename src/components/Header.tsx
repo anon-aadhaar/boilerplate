@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { FunctionComponent, useMemo } from "react";
 import Image from "next/image";
-import { useWeb3Modal } from "@web3modal/react";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useAccount } from "wagmi";
 import { icons } from "../styles/illustrations";
 import { shortenAddress } from "@/utils";

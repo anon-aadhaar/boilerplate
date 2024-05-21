@@ -1,14 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
-import { AnonAadhaarCore, packGroth16Proof } from "@anon-aadhaar/core";
+import {
+  AnonAadhaarCore,
+  deserialize,
+  packGroth16Proof,
+} from "@anon-aadhaar/core";
 import { useEffect, useState, useContext } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
-import { useAccount, useContractWrite } from "wagmi";
+import { useAccount } from "wagmi";
 import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
+import { writeContract } from "@wagmi/core";
+import { wagmiConfig } from "../config";
 
 export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
@@ -18,15 +24,8 @@ export default function Vote() {
   const router = useRouter();
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
-  const { isLoading, isSuccess, write } = useContractWrite({
-    address: `0x${
-      useTestAadhaar
-        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
-        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
-    }`,
-    abi: anonAadhaarVote.abi,
-    functionName: "voteForProposal",
-  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const sendVote = async (
     _rating: string,
@@ -35,28 +34,51 @@ export default function Vote() {
     const packedGroth16Proof = packGroth16Proof(
       _anonAadhaarCore.proof.groth16Proof
     );
-    write({
-      args: [
-        _rating,
-        _anonAadhaarCore.proof.nullifierSeed,
-        _anonAadhaarCore.proof.nullifier,
-        _anonAadhaarCore.proof.timestamp,
-        address,
-        [
-          _anonAadhaarCore.proof.ageAbove18,
-          _anonAadhaarCore.proof.gender,
-          _anonAadhaarCore.proof.pincode,
-          _anonAadhaarCore.proof.state,
+    setIsLoading(true);
+    try {
+      const voteTx = await writeContract(wagmiConfig, {
+        abi: anonAadhaarVote.abi,
+        address: `0x${
+          useTestAadhaar
+            ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
+            : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
+        }`,
+        functionName: "voteForProposal",
+        args: [
+          _rating,
+          _anonAadhaarCore.proof.nullifierSeed,
+          _anonAadhaarCore.proof.nullifier,
+          _anonAadhaarCore.proof.timestamp,
+          address,
+          [
+            _anonAadhaarCore.proof.ageAbove18,
+            _anonAadhaarCore.proof.gender,
+            _anonAadhaarCore.proof.pincode,
+            _anonAadhaarCore.proof.state,
+          ],
+          packedGroth16Proof,
         ],
-        packedGroth16Proof,
-      ],
-    });
+      });
+      setIsLoading(false);
+      setIsSuccess(true);
+      console.log("Vote transaction: ", voteTx);
+    } catch (e) {
+      setIsLoading(false);
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    if (anonAadhaar.status === "logged-in") {
-      setAnonAadhaarCore(latestProof);
-    }
+    // To do: fix the hook in the react lib
+    const aaObj = localStorage.getItem("anonAadhaar");
+    const anonAadhaarProofs = JSON.parse(aaObj!).anonAadhaarProofs;
+
+    deserialize(
+      anonAadhaarProofs[Object.keys(anonAadhaarProofs).length - 1].pcd
+    ).then((result) => {
+      console.log(result);
+      setAnonAadhaarCore(result);
+    });
   }, [anonAadhaar, latestProof]);
 
   useEffect(() => {
@@ -68,7 +90,7 @@ export default function Vote() {
           }
         )
       : null;
-  }, [address, useTestAadhaar, router, setVoted, anonAadhaarCore]);
+  }, [useTestAadhaar, router, setVoted, anonAadhaarCore]);
 
   useEffect(() => {
     if (isSuccess) router.push("./results");
