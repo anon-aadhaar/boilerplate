@@ -4,37 +4,14 @@ import { useState, useEffect, createContext } from "react";
 import type { AppProps } from "next/app";
 import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import { Header } from "../components/Header";
-import { WagmiProvider, http, createConfig } from "wagmi";
+import { WagmiProvider } from "wagmi";
 import { createWeb3Modal } from "@web3modal/wagmi/react";
 import { Footer } from "@/components/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { sepolia } from "viem/chains";
-import { walletConnect } from "wagmi/connectors";
-import { defaultWagmiConfig } from "@web3modal/wagmi";
 import { wagmiConfig } from "../config";
 
 const queryClient = new QueryClient();
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
-
-// const metadata = {
-//   name: "Anon Aadhaar",
-//   description: "Example voting app",
-//   url: "https://localhost:3000/",
-//   icons: ["https://avatars.githubusercontent.com/u/37784886"],
-// };
-
-// export const config = createConfig({
-//   chains: [sepolia],
-//   connectors: [
-//     walletConnect({
-//       projectId,
-//       metadata,
-//     }),
-//   ],
-//   transports: {
-//     [sepolia.id]: http(),
-//   },
-// });
 
 createWeb3Modal({
   wagmiConfig: wagmiConfig,

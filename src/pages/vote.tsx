@@ -1,5 +1,3 @@
-"use client";
-
 /* eslint-disable react/no-unescaped-entities */
 import { useAnonAadhaar, useProver } from "@anon-aadhaar/react";
 import {
@@ -11,23 +9,12 @@ import { useEffect, useState, useContext } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
-import { createConfig, http, useAccount } from "wagmi";
+import { useAccount } from "wagmi";
 import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
-import { sepolia } from "@wagmi/core/chains";
 import { writeContract } from "@wagmi/core";
-import { walletConnect } from "wagmi/connectors";
 import { wagmiConfig } from "../config";
-
-// const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || "";
-// const config = createConfig({
-//   chains: [sepolia],
-//   transports: {
-//     [sepolia.id]: http(),
-//   },
-//   connectors: [walletConnect({ projectId })],
-// });
 
 export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
@@ -82,7 +69,7 @@ export default function Vote() {
   };
 
   useEffect(() => {
-    // if (anonAadhaar.status === "logged-in") {
+    // To do: fix the hook in the react lib
     const aaObj = localStorage.getItem("anonAadhaar");
     const anonAadhaarProofs = JSON.parse(aaObj!).anonAadhaarProofs;
 
@@ -92,7 +79,6 @@ export default function Vote() {
       console.log(result);
       setAnonAadhaarCore(result);
     });
-    // }
   }, [anonAadhaar, latestProof]);
 
   useEffect(() => {
