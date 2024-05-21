@@ -83,7 +83,7 @@ export default function Results() {
           nullifier
         </a>
         <div
-          onClick={onStartAgain}
+          onClick={() => onStartAgain()}
           className="flex flex-row justify-center gap-2 mt-5 hover:underline cursor-pointer"
         >
           <Image alt="left arrow" src={leftArrow} height={16} width={16} />

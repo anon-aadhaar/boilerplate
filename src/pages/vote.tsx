@@ -5,10 +5,19 @@ import { useEffect, useState, useContext } from "react";
 import { Ratings } from "@/components/Ratings";
 import { Loader } from "@/components/Loader";
 import { useRouter } from "next/router";
-import { useAccount, useContractWrite } from "wagmi";
+import { createConfig, http, useAccount } from "wagmi";
 import anonAadhaarVote from "../../public/AnonAadhaarVote.json";
 import { hasVoted } from "@/utils";
 import { AppContext } from "./_app";
+import { sepolia } from "@wagmi/core/chains";
+import { writeContract } from "@wagmi/core";
+
+const config = createConfig({
+  chains: [sepolia],
+  transports: {
+    [sepolia.id]: http(),
+  },
+});
 
 export default function Vote() {
   const [anonAadhaar] = useAnonAadhaar();
@@ -18,15 +27,8 @@ export default function Vote() {
   const router = useRouter();
   const { isConnected, address } = useAccount();
   const [rating, setRating] = useState<string>();
-  const { isLoading, isSuccess, write } = useContractWrite({
-    address: `0x${
-      useTestAadhaar
-        ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
-        : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
-    }`,
-    abi: anonAadhaarVote.abi,
-    functionName: "voteForProposal",
-  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const sendVote = async (
     _rating: string,
@@ -35,22 +37,39 @@ export default function Vote() {
     const packedGroth16Proof = packGroth16Proof(
       _anonAadhaarCore.proof.groth16Proof
     );
-    write({
-      args: [
-        _rating,
-        _anonAadhaarCore.proof.nullifierSeed,
-        _anonAadhaarCore.proof.nullifier,
-        _anonAadhaarCore.proof.timestamp,
-        address,
-        [
-          _anonAadhaarCore.proof.ageAbove18,
-          _anonAadhaarCore.proof.gender,
-          _anonAadhaarCore.proof.pincode,
-          _anonAadhaarCore.proof.state,
+    setIsLoading(true);
+    try {
+      const voteTx = await writeContract(config, {
+        abi: anonAadhaarVote.abi,
+        address: `0x${
+          useTestAadhaar
+            ? process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_TEST
+            : process.env.NEXT_PUBLIC_VOTE_CONTRACT_ADDRESS_PROD
+        }`,
+        functionName: "voteForProposal",
+        args: [
+          _rating,
+          _anonAadhaarCore.proof.nullifierSeed,
+          _anonAadhaarCore.proof.nullifier,
+          _anonAadhaarCore.proof.timestamp,
+          address,
+          [
+            _anonAadhaarCore.proof.ageAbove18,
+            _anonAadhaarCore.proof.gender,
+            _anonAadhaarCore.proof.pincode,
+            _anonAadhaarCore.proof.state,
+          ],
+          packedGroth16Proof,
         ],
-        packedGroth16Proof,
-      ],
-    });
+      });
+      setIsLoading(false);
+      setIsSuccess(true);
+      console.log("Vote transaction: ", voteTx);
+    } catch (e) {
+      setIsLoading(false);
+      console.log(e);
+      throw new Error("Vote tx failed.");
+    }
   };
 
   useEffect(() => {
@@ -68,7 +87,7 @@ export default function Vote() {
           }
         )
       : null;
-  }, [address, useTestAadhaar, router, setVoted, anonAadhaarCore]);
+  }, [useTestAadhaar, router, setVoted, anonAadhaarCore]);
 
   useEffect(() => {
     if (isSuccess) router.push("./results");
@@ -106,6 +125,7 @@ export default function Vote() {
                     type="button"
                     className="inline-block mt-5 bg-[#009A08] rounded-lg text-white px-14 py-1 border-2 border-[#009A08] font-rajdhani font-medium"
                     onClick={() => {
+                      console.log("coucou");
                       if (rating !== undefined && anonAadhaarCore !== undefined)
                         sendVote(rating, anonAadhaarCore);
                     }}
