@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import votingAbi from "../public/AnonAadhaarVote.json";
 
-const providerUrl = `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_SEPOLIA_PROVIDER_ID}`;
+const providerUrl = process.env.NEXT_PUBLIC_RPC_URL;
 
 export const getTotalVotes = async (useTestAadhaar: boolean): Promise<any> => {
   const voteBreakdown = [

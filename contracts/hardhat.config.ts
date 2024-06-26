@@ -10,7 +10,7 @@ const config: HardhatUserConfig = {
   },
   networks: {
     sepolia: {
-      url: `https://sepolia.infura.io/v3/${process.env.NEXT_PUBLIC_SEPOLIA_PROVIDER_ID}`,
+      url: process.env.NEXT_PUBLIC_RPC_URL,
       accounts: [process.env.PRIVATE_KEY || ""],
     },
   },
