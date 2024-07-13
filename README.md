@@ -2,7 +2,7 @@
 
 This is an example app showing how to integrate the [Anon Aadhaar](https://github.com/anon-aadhaar/anon-aadhaar).
 
-You can check the documentation [here](https://anon-aadhaar-documentation.vercel.app/)
+You can check the documentation [here](https://documentation.anon-aadhaar.pse.dev/)
 
 You can fork/clone it.
 
