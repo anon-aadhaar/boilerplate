@@ -77,7 +77,7 @@ export default function Results() {
         <a
           target={"_blank"}
           rel={"noreferrer"}
-          href="https://anon-aadhaar-documentation.vercel.app/docs/nullifiers"
+          href="https://documentation.anon-aadhaar.pse.dev/docs/nullifiers"
           className="underline"
         >
           nullifier

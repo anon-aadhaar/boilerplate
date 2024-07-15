@@ -47,7 +47,7 @@ export const Footer: FunctionComponent<FooterProps> = ({
           <a
             target={"_blank"}
             rel={"noreferrer"}
-            href="https://anon-aadhaar-documentation.vercel.app/docs/quick-setup"
+            href="https://documentation.anon-aadhaar.pse.dev/docs/quick-setup"
           >
             <div className="flex flex-row text-sm items-center text-black font-rajdhani font-medium gap-1 hover:underline">
               <p className="leading-none text-lg pt-1">TUTORIAL</p>
